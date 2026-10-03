@@ -9,6 +9,20 @@
 
 Node.js 24を使用する。通常のURLは `http://127.0.0.1:4321/`。ポート番号が変わる場合があるので、ターミナルの表示を使う。開発サーバーを動かしている間、保存したコードがサイトに反映される。Astroのページは `npm run dev` で確認する。
 
+## VS CodeからGitHubへ反映する
+
+GitHubの編集ページで保存すると、GitHub側に新しいコミットが作られる。PC側は自動更新されないため、VS Codeでも編集する場合は次の手順で同期する。
+
+1. 編集前にソース管理の「… → プル」でGitHub側の最新変更を取得する。未コミットの編集がある場合は、先にコミットしてからプルする。
+2. ファイルを編集・保存する。更新内容に応じてバージョンを更新する。小さな修正は `npm version patch --no-git-tag-version` を実行する。
+3. 差分を確認し、反映するファイルをステージしてコミットする。
+4. 「… → プッシュ」でGitHubへ送る。GitHub側に別の更新があり拒否された場合は、プルして変更を統合する。競合が出たらVS Codeのマージエディターで両方の差分を確認し、解消したファイルをステージしてコミットした後、再度プッシュする。
+5. [GitHub Actions](https://github.com/ru13ii/portfolio/actions)の最新公開処理が成功した後に、公開サイトを再読み込みする。
+
+`git status --short --branch` に `ahead 2, behind 1` と表示される場合、PCだけに2件、GitHubだけに1件のコミットがあり、履歴の統合が必要。問い合わせフォームの接続を維持するため、`site.formEndpoint` は設定済みの値を保つ。
+
+`Permission to ru13ii/portfolio.git denied to 別のアカウント名` が表示された場合は、コミットの署名ではなくGitHubへの認証アカウントが異なる。このプロジェクトではローカルGit設定の `credential.https://github.com.username` を `ru13ii`、`credential.https://github.com.useHttpPath` を `true` に設定し、他のリポジトリの認証と区別する。VS CodeでGitHubの認証を求められたらru13iiでログインする。認証情報やトークンを公開ファイルに記載しない。
+
 ## 編集ページとアクセストークン
 
 [編集ページ](https://ru13ii.github.io/portfolio/edit/)から文章・作品・お知らせ・リンクを変更できる。保存先は `ru13ii/portfolio`。作品の追加・削除・並び替え、JSONのダウンロードにも対応している。

@@ -2,7 +2,7 @@
   "site": {
     "name": "RuBii",
     "nameJa": "るびぃ",
-    "role": "ボカロP・作曲家",
+    "role": "ボカロP",
     "heroText": "「感情豊かな音楽をお届けします」",
     "featuredLead": "まずはこの曲。「雨を待つ」",
     "aboutTitle": "宝石みたいに君を輝かせる曲。",
@@ -16,7 +16,7 @@
     "youtubeUrl": "https://www.youtube.com/@ru13ii",
     "soundcloudUrl": "https://soundcloud.com/rubii-684907841",
     "xUrl": "https://x.com/ru13ii_",
-    "formEndpoint": ""
+    "formEndpoint": "https://formspree.io/f/meaoyqdr"
   },
   "genres": [
     "ポップス",

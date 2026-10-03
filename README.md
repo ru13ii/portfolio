@@ -39,10 +39,12 @@ npm run preview  # ビルドしたサイトを手元で確認
 
 `main` の更新時にGitHub Actionsがビルドし、GitHub Pagesへ自動公開します。公開URLとサブパスは、GitHubのリポジトリ名から設定します。
 
+VS Codeと編集ページの両方を使う場合は、編集前にGitHub側の変更をプルしてください。プッシュが拒否された場合の手順は[開発・運用ガイド](docs/operations.md#vs-codeからgithubへ反映する)を参照してください。
+
 ## ドキュメント
 
 - [要件・仕様](docs/requirements.md)
 - [開発・編集・フォーム設定の手順](docs/operations.md)
 - [設計・変更履歴](docs/development.md)
 
-現在のバージョン: **0.2.1**
+現在のバージョン: **0.2.2**
