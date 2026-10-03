@@ -30,7 +30,7 @@ Node.js 24を使用する。通常のURLは `http://127.0.0.1:4321/`。ポート
 
 ## 問い合わせフォーム
 
-GitHub Pagesは静的サイトなので、受信・メール通知はFormspreeを使う。Formspreeに「RuBii Portfolio Contact」を作成し、`https://formspree.io/f/meaoyqdr` を接続済み。受信先は本人が提供したメールアドレスをサービス側で指定している。迷惑送信のフィルターは既定のFormshieldを利用する。実際の受信テストは本人の承認後に行う。
+GitHub Pagesは静的サイトなので、受信・メール通知はFormspreeを使う。Formspreeに「RuBii Portfolio Contact」を作成し、`https://formspree.io/f/meaoyqdr` を接続済み。受信先は本人が提供したメールアドレスをサービス側で指定している。迷惑送信のフィルターは既定のFormshieldを利用する。本人の承認を受け、公開サイトからテストを1件送信済み。画面の送信成功とFormspreeの受信一覧への記録を確認した。本人からメールの到着も確認済み。
 
 1. [Formspree](https://formspree.io/register)に登録・ログインし、受信に使うメールアドレスを確認する。
 2. サイト用フォームを作成する。
