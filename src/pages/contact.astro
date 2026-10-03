@@ -17,7 +17,9 @@ const enabled = /^https:\/\//.test(content.site.formEndpoint);
       <p>{content.site.contactText}</p>
       <a class="contact-x" href={content.site.xUrl} target="_blank" rel="noopener noreferrer">Xで連絡する <span aria-hidden="true">↗</span><span class="sr-only">新しいタブで開く</span></a>
     </div>
-    <form class="contact-form" id="contact-form" data-endpoint={content.site.formEndpoint}>
+    <!-- action/methodはJavaScriptが使えない場合の通常送信にも使う。 -->
+    <form class="contact-form" id="contact-form" action={enabled ? content.site.formEndpoint : undefined} method="POST" data-endpoint={content.site.formEndpoint}>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
       {!enabled && <p class="contact-form__note">フォームは現在準備中です。ご連絡はXからお願いいたします。</p>}
       <div class="field">
         <label for="contact-name">お名前</label>
@@ -57,11 +59,19 @@ const enabled = /^https:\/\//.test(content.site.formEndpoint);
         body: new FormData(form),
         headers: { Accept: 'application/json' },
       });
-      if (!response.ok) throw new Error('送信に失敗しました。');
+      if (!response.ok) {
+        // 利用枠や入力エラーを区別し、内容を残したまま再送できるようにする。
+        const message = response.status === 429
+          ? '現在フォームで送信を受け付けられません。Xからご連絡ください。'
+          : '送信できませんでした。入力内容を確認するか、Xからご連絡ください。';
+        throw new Error(message);
+      }
       form.reset();
       status.textContent = '送信しました。ご連絡ありがとうございます。';
-    } catch {
-      status.textContent = '送信できませんでした。Xからご連絡ください。';
+    } catch (error) {
+      status.textContent = error instanceof Error && error.message !== 'Failed to fetch'
+        ? error.message
+        : '通信できませんでした。時間をおいて再度送信するか、Xからご連絡ください。';
     } finally {
       button.disabled = false;
     }

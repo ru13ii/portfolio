@@ -45,4 +45,4 @@ npm run preview  # ビルドしたサイトを手元で確認
 - [開発・編集・フォーム設定の手順](docs/operations.md)
 - [設計・変更履歴](docs/development.md)
 
-現在のバージョン: **0.1.5**
+現在のバージョン: **0.2.0**
