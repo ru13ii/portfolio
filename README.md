@@ -1,6 +1,6 @@
 # RuBii ポートフォリオ
 
-Astro + Tailwind CSS + JSONで作った作曲家ポートフォリオです。現在はローカルで確認できます。GitHubの保存先は `ru13ii` アカウントです。問い合わせフォームの送信先は、後から接続します。
+Astro + Tailwind CSS + JSONで作った作曲家ポートフォリオです。GitHub Pagesで公開するサイトです。GitHubの保存先は `ru13ii` アカウントです。問い合わせフォームの送信先は、後から接続します。
 
 ## VS Codeで確認する
 
@@ -33,7 +33,7 @@ VS Codeでコードを保存すると、開いているサイトに変更が反�
 
 ## GitHub Pagesで公開するとき
 
-保存先アカウントは `ru13ii`、リポジトリは `portfolio` です。公開URLは `https://ru13ii.github.io/portfolio/` です。アップロード・公開の状況は `docs/development.md` に記録します。
+保存先アカウントは `ru13ii`、リポジトリは `portfolio` です。リポジトリは [ru13ii/portfolio](https://github.com/ru13ii/portfolio)、サイトは [https://ru13ii.github.io/portfolio/](https://ru13ii.github.io/portfolio/)、編集ページは [こちら](https://ru13ii.github.io/portfolio/edit/) です。`main` に変更を保存すると、GitHub Actionsが自動で再公開します。
 
 1. GitHubアカウントと、このサイト用のリポジトリを作る。GitHub FreeでGitHub Pagesを使う場合は公開リポジトリを選ぶ。
 2. このフォルダのファイルをリポジトリに置く。
@@ -44,7 +44,7 @@ Astroの公開URLとサブパスは、GitHub Actions上のリポジトリ名か�
 
 ## 編集ページから保存するとき
 
-公開後の `/edit/` で内容を変更し、GitHubユーザー名、リポジトリ名、Fine-grained personal access tokenを入力して保存します。トークンは**対象リポジトリのみ**に `Contents: Read and write` 権限を付けてください。保存時にGitHubの [`src/data/content.json`](src/data/content.json) を更新し、GitHub Actionsがサイトを再公開します。
+[編集ページ](https://ru13ii.github.io/portfolio/edit/)で内容を変更し、Fine-grained personal access tokenを入力して保存します。保存先のユーザー名 `ru13ii` とリポジトリ名 `portfolio` は入力済みです。トークンは**対象リポジトリのみ**に `Contents: Read and write` 権限を付けてください。保存時にGitHubの [`src/data/content.json`](src/data/content.json) を更新し、GitHub Actionsがサイトを再公開します。
 
 トークンはサイトのファイル、ブラウザのlocalStorage、Cookieに保存しません。編集ページのURLは誰でも開けますが、書き込み権限がなければ保存できません。作業途中の控えとして、JSONのダウンロードもできます。
 
@@ -61,4 +61,4 @@ Astroの公開URLとサブパスは、GitHub Actions上のリポジトリ名か�
 
 ## ドキュメントとバージョン
 
-現在のバージョンは `0.1.3` です。要件は [docs/requirements.md](docs/requirements.md)、設計・作業記録は [docs/development.md](docs/development.md) を参照してください。更新時はセマンティックバージョニングに沿って `package.json` とロックファイルのバージョンを更新します。
+現在のバージョンは `0.1.4` です。要件は [docs/requirements.md](docs/requirements.md)、設計・作業記録は [docs/development.md](docs/development.md) を参照してください。更新時はセマンティックバージョニングに沿って `package.json` とロックファイルのバージョンを更新します。
