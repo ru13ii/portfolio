@@ -1,0 +1,61 @@
+{
+  "site": {
+    "name": "RuBii",
+    "nameJa": "るびぃ",
+    "role": "ボカロP・作曲家",
+    "heroText": "オリジナル楽曲と、作品のための音楽を制作しています。",
+    "featuredLead": "オリジナル楽曲から一曲。RuBiiの音楽に触れてください。",
+    "aboutTitle": "音の先に、情景を。",
+    "aboutText": "RuBiiは、オリジナル楽曲を中心に制作・発表するボカロP／作曲家です。メロディーと音の質感を大切にしながら、作品の世界観に寄り添う音楽を届けています。楽曲制作・BGM制作のご相談も受け付けています。",
+    "homeContactTitle": "あなたの作品に、音楽を。",
+    "homeContactText": "楽曲制作・BGM制作について、お気軽にご相談ください。",
+    "worksIntro": "オリジナル楽曲を掲載しています。ジャンルを選んで作品をご覧ください。",
+    "aboutIntro": "RuBiiについて。",
+    "contactIntro": "楽曲制作・BGM制作のご相談をお待ちしています。",
+    "contactText": "楽曲制作・BGM制作のご相談は、現在Xのメッセージから受け付けています。フォームも準備中です。",
+    "youtubeUrl": "https://www.youtube.com/@ru13ii",
+    "soundcloudUrl": "https://soundcloud.com/rubii-684907841",
+    "xUrl": "https://x.com/ru13ii_",
+    "formEndpoint": ""
+  },
+  "genres": ["ポップス", "バラード", "エレクトロ"],
+  "updates": [
+    {
+      "date": "2026.04.30",
+      "text": "オリジナル楽曲「おもかげ」を公開しました。",
+      "url": "https://www.youtube.com/watch?v=QXdFQkcMQpw"
+    }
+  ],
+  "works": [
+    {
+      "id": "ame-wo-matsu",
+      "title": "雨を待つ",
+      "year": "2024",
+      "genre": "バラード",
+      "role": "作詞・作曲",
+      "usage": "オリジナル楽曲",
+      "vocal": "知声",
+      "description": "知声を迎えたオリジナル楽曲。",
+      "mediaType": "youtube",
+      "mediaUrl": "https://youtu.be/CxoTzLIx8Cs",
+      "soundcloudUrl": "https://soundcloud.com/rubii-684907841/sbrqvucpljrw",
+      "coverUrl": "https://i.ytimg.com/vi/CxoTzLIx8Cs/hqdefault.jpg",
+      "featured": true
+    },
+    {
+      "id": "omokage",
+      "title": "おもかげ",
+      "year": "2026",
+      "genre": "バラード",
+      "role": "音楽",
+      "usage": "無色透名祭3 参加作品",
+      "vocal": "知声",
+      "description": "知声を迎えたオリジナル楽曲。",
+      "mediaType": "youtube",
+      "mediaUrl": "https://www.youtube.com/watch?v=QXdFQkcMQpw",
+      "soundcloudUrl": "",
+      "coverUrl": "https://i.ytimg.com/vi/QXdFQkcMQpw/hqdefault.jpg",
+      "featured": false
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+---
+import content from '../data/content.json';
+
+const base = import.meta.env.BASE_URL;
+const links = [
+  { label: 'Works', href: `${base}works/`, match: '/works/' },
+  { label: 'About', href: `${base}about/`, match: '/about/' },
+  { label: 'Contact', href: `${base}contact/`, match: '/contact/' },
+];
+const pathname = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="site-header__inner shell">
+    <a class="brand" href={base} aria-label={`${content.site.name} トップページ`}>
+      <span class="brand__mark" aria-hidden="true">R<span>•</span></span>
+      <span class="brand__name">{content.site.name}</span>
+    </a>
+    <nav class="site-nav" aria-label="メインメニュー">
+      {links.map((link) => (
+        <a href={link.href} aria-current={pathname.includes(link.match) ? 'page' : undefined}>{link.label}</a>
+      ))}
+    </nav>
+    <a class="header-contact" href={`${base}contact/`}>制作のご相談 <span aria-hidden="true">↗</span></a>
+  </div>
+</header>

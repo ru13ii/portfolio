@@ -1,0 +1,42 @@
+---
+import { mediaEmbedUrl } from '../lib/media.js';
+
+const { work, large = false } = Astro.props;
+const embedUrl = mediaEmbedUrl(work.mediaType, work.mediaUrl);
+---
+<div class:list={['media-preview', { 'media-preview--large': large }]}>
+  {embedUrl ? (
+    <button
+      class="media-preview__button"
+      type="button"
+      data-media-embed={embedUrl}
+      data-media-title={`${work.title} を再生`}
+      aria-label={`${work.title} を再生`}
+    >
+      {work.coverUrl ? (
+        <img src={work.coverUrl} alt="" loading={large ? 'eager' : 'lazy'} />
+      ) : (
+        <span class="media-preview__art" aria-hidden="true"><span>{work.title}</span></span>
+      )}
+      <span class="media-preview__shade" aria-hidden="true"></span>
+      <span class="media-preview__play" aria-hidden="true">▶</span>
+      <span class="media-preview__caption">PLAY / {work.mediaType === 'soundcloud' ? 'SOUNDCLOUD' : 'YOUTUBE'}</span>
+    </button>
+  ) : (
+    <div class="media-preview__missing">再生リンクは準備中です</div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll('[data-media-embed]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = button.dataset.mediaEmbed;
+      iframe.title = button.dataset.mediaTitle;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'eager';
+      button.replaceWith(iframe);
+    });
+  });
+</script>

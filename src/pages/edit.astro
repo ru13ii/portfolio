@@ -1,0 +1,86 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import content from '../data/content.json';
+---
+<SiteLayout title={`編集 | ${content.site.name}`} description="RuBiiのサイト内容を編集します。" noindex>
+  <div class="shell edit-page">
+    <div class="edit-page__intro">
+      <p class="eyebrow">Site editor</p>
+      <h1>サイトの編集</h1>
+      <p>文章や作品情報を変更できます。保存するとGitHubのJSONが更新され、GitHub Pagesの再公開が始まります。保存するまでは公開サイトに反映されません。</p>
+    </div>
+
+    <div class="editor-layout">
+      <div>
+        <section class="editor-section" aria-labelledby="editor-site-heading">
+          <div class="editor-section__head"><h2 id="editor-site-heading">サイトの文章</h2></div>
+          <div class="editor-fields">
+            <div class="field"><label for="edit-name">活動名義</label><input id="edit-name" data-site-field="name" /></div>
+            <div class="field"><label for="edit-name-ja">日本語名義</label><input id="edit-name-ja" data-site-field="nameJa" /></div>
+            <div class="field field--wide"><label for="edit-role">肩書き</label><input id="edit-role" data-site-field="role" /></div>
+            <div class="field field--wide"><label for="edit-hero">トップの紹介文</label><textarea id="edit-hero" rows="3" data-site-field="heroText"></textarea></div>
+            <div class="field field--wide"><label for="edit-featured-lead">代表曲の紹介文</label><textarea id="edit-featured-lead" rows="2" data-site-field="featuredLead"></textarea></div>
+            <div class="field field--wide"><label for="edit-about-title">Aboutの見出し</label><input id="edit-about-title" data-site-field="aboutTitle" /></div>
+            <div class="field field--wide"><label for="edit-about">プロフィール文</label><textarea id="edit-about" rows="7" data-site-field="aboutText"></textarea></div>
+            <div class="field field--wide"><label for="edit-home-contact-title">トップの問い合わせ見出し</label><input id="edit-home-contact-title" data-site-field="homeContactTitle" /></div>
+            <div class="field field--wide"><label for="edit-home-contact">トップの問い合わせ文</label><textarea id="edit-home-contact" rows="2" data-site-field="homeContactText"></textarea></div>
+            <div class="field field--wide"><label for="edit-works-intro">Worksの紹介文</label><textarea id="edit-works-intro" rows="2" data-site-field="worksIntro"></textarea></div>
+            <div class="field field--wide"><label for="edit-about-intro">Aboutの紹介文</label><input id="edit-about-intro" data-site-field="aboutIntro" /></div>
+            <div class="field field--wide"><label for="edit-contact-intro">Contactの紹介文</label><input id="edit-contact-intro" data-site-field="contactIntro" /></div>
+            <div class="field field--wide"><label for="edit-contact">連絡方法の説明</label><textarea id="edit-contact" rows="3" data-site-field="contactText"></textarea></div>
+          </div>
+        </section>
+
+        <section class="editor-section" aria-labelledby="editor-news-heading">
+          <div class="editor-section__head">
+            <h2 id="editor-news-heading">お知らせ</h2>
+            <button class="editor-secondary" type="button" id="add-update">お知らせを追加</button>
+          </div>
+          <div id="editor-news-list"></div>
+        </section>
+
+        <section class="editor-section" aria-labelledby="editor-links-heading">
+          <div class="editor-section__head"><h2 id="editor-links-heading">リンクとフォーム</h2></div>
+          <div class="editor-fields">
+            <div class="field field--wide"><label for="edit-youtube">YouTube URL</label><input id="edit-youtube" type="url" data-site-field="youtubeUrl" /></div>
+            <div class="field field--wide"><label for="edit-soundcloud">SoundCloud URL</label><input id="edit-soundcloud" type="url" data-site-field="soundcloudUrl" /></div>
+            <div class="field field--wide"><label for="edit-x">X URL</label><input id="edit-x" type="url" data-site-field="xUrl" /></div>
+            <div class="field field--wide"><label for="edit-form-endpoint">フォーム送信先 URL</label><input id="edit-form-endpoint" type="url" data-site-field="formEndpoint" placeholder="後で設定できます" /></div>
+          </div>
+          <p class="editor-tip">フォーム送信先が空欄の間は、Contactページの送信ボタンは無効になります。</p>
+        </section>
+
+        <section class="editor-section" aria-labelledby="editor-works-heading">
+          <div class="editor-section__head">
+            <h2 id="editor-works-heading">作品</h2>
+            <button class="editor-secondary" type="button" id="add-work">作品を追加</button>
+          </div>
+          <div id="editor-work-list"></div>
+        </section>
+      </div>
+
+      <aside class="editor-side" aria-labelledby="editor-save-heading">
+        <h2 id="editor-save-heading">保存と公開</h2>
+        <p>このサイトの保存先は ru13ii/portfolio です。保存用のトークンを入力すると、変更を公開できます。</p>
+        <ol>
+          <li>このサイトの保存先を確認する</li>
+          <li>リポジトリの内容を書き込めるトークンを作る</li>
+          <li>下の欄を入力して保存する</li>
+        </ol>
+        <div class="field"><label for="github-owner">GitHubユーザー名</label><input id="github-owner" autocomplete="username" value="ru13ii" /></div>
+        <div class="field"><label for="github-repo">リポジトリ名</label><input id="github-repo" value="portfolio" /></div>
+        <div class="field"><label for="github-token">アクセストークン</label><input id="github-token" type="password" autocomplete="off" placeholder="保存時のみ入力" /></div>
+        <p>トークンはサイトのファイルやブラウザの保存領域に記録しません。対象リポジトリだけに Contents の書き込み権限を付けてください。</p>
+        <div class="editor-actions">
+          <button class="button-primary" type="button" id="save-github">GitHubへ保存 <span aria-hidden="true">↗</span></button>
+          <button class="editor-secondary" type="button" id="download-json">JSONをダウンロード</button>
+        </div>
+        <p class="editor-status" id="editor-status" role="status" aria-live="polite"></p>
+      </aside>
+    </div>
+  </div>
+</SiteLayout>
+
+<script>
+  import '../scripts/editor.js';
+</script>

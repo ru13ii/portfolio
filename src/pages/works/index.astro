@@ -1,0 +1,63 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import MediaPreview from '../../components/MediaPreview.astro';
+import content from '../../data/content.json';
+---
+<SiteLayout title={`Works | ${content.site.name}`} description="RuBiiのオリジナル楽曲を紹介します。">
+  <div class="page-heading">
+    <div class="shell">
+      <p class="eyebrow">Original Music</p>
+      <h1>Works</h1>
+      <p>{content.site.worksIntro}</p>
+    </div>
+  </div>
+
+  <div class="shell works-content">
+    <div class="filter-bar" role="group" aria-label="ジャンルで絞り込む">
+      <button type="button" data-filter="all" aria-pressed="true">すべて</button>
+      {content.genres.map((genre) => <button type="button" data-filter={genre} aria-pressed="false">{genre}</button>)}
+      <span class="filter-count" aria-live="polite"><span id="visible-count">{content.works.length}</span> 作品</span>
+    </div>
+
+    <div class="works-grid" id="works-grid">
+      {content.works.map((work) => (
+        <article class="work-card" data-work-genre={work.genre}>
+          <MediaPreview work={work} />
+          <div class="work-card__caption">
+            <p class="work-card__type">［ {work.usage || 'オリジナル楽曲'} ］ {work.role}</p>
+            <h2>{work.title}</h2>
+            {work.description && <p class="work-card__info">{work.description}</p>}
+            <div class="work-card__tail">
+              <span>{work.genre}{work.year ? ` · ${work.year}` : ''}{work.vocal ? ` · Vocal: ${work.vocal}` : ''}</span>
+              <span class="work-card__links">
+                {work.soundcloudUrl && <a href={work.soundcloudUrl} target="_blank" rel="noopener noreferrer">SoundCloud ↗ <span class="sr-only">新しいタブで開く</span></a>}
+                {work.mediaUrl && <a href={work.mediaUrl} target="_blank" rel="noopener noreferrer">公開ページ ↗ <span class="sr-only">新しいタブで開く</span></a>}
+              </span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="works-empty" id="works-empty" aria-live="polite">このジャンルの作品は、これから追加予定です。</div>
+  </div>
+</SiteLayout>
+
+<script>
+  const buttons = document.querySelectorAll('[data-filter]');
+  const cards = document.querySelectorAll('[data-work-genre]');
+  const count = document.getElementById('visible-count');
+  const empty = document.getElementById('works-empty');
+
+  buttons.forEach((button) => button.addEventListener('click', () => {
+    const genre = button.dataset.filter;
+    let visible = 0;
+    buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+    cards.forEach((card) => {
+      const show = genre === 'all' || card.dataset.workGenre === genre;
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (count) count.textContent = String(visible);
+    if (empty) empty.dataset.visible = String(visible === 0);
+  }));
+</script>
