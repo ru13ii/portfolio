@@ -4,23 +4,17 @@ import content from '../data/content.json';
 const enabled = /^https:\/\//.test(content.site.formEndpoint);
 ---
 <SiteLayout title={`Contact | ${content.site.name}`} description="RuBiiへの楽曲制作・BGM制作のご相談はこちら。">
-  <div class="page-heading">
-    <div class="shell">
-      <p class="eyebrow">Music for your project</p>
-      <h1>Contact</h1>
-      <p>{content.site.contactIntro}</p>
-    </div>
-  </div>
+  <div class="shell page-heading"><p class="eyebrow">04 / A NEW COMPOSITION</p><h1>Contact<span>制作のご相談</span></h1><p>{content.site.contactIntro}</p></div>
   <section class="shell contact-content" aria-label="お問い合わせ">
     <div class="contact-copy">
       <p class="eyebrow">Get in touch</p>
       <p>{content.site.contactText}</p>
       <a class="contact-x" href={content.site.xUrl} target="_blank" rel="noopener noreferrer">Xで連絡する <span aria-hidden="true">↗</span><span class="sr-only">新しいタブで開く</span></a>
     </div>
-    <!-- action/methodはJavaScriptが使えない場合の通常送信にも使う。 -->
+    <!-- JavaScriptが無効でも通常POSTでFormspreeへ送信できる。 -->
     <form class="contact-form" id="contact-form" action={enabled ? content.site.formEndpoint : undefined} method="POST" data-endpoint={content.site.formEndpoint}>
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
       {!enabled && <p class="contact-form__note">フォームは現在準備中です。ご連絡はXからお願いいたします。</p>}
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
       <div class="field">
         <label for="contact-name">お名前</label>
         <input id="contact-name" name="name" autocomplete="name" required />

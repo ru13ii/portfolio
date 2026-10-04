@@ -1,0 +1,33 @@
+.edit-page { padding-top: 58px; padding-bottom: 120px; }
+.edit-page__intro { max-width: 770px; }
+.edit-page__intro h1 { margin: 13px 0 18px; font-family: var(--serif); font-size: clamp(3.4rem, 7vw, 6rem); font-weight: 400; letter-spacing: -.06em; }
+.edit-page__intro p { color: var(--ink-soft); font-size: .88rem; line-height: 2; }
+.editor-layout { display: grid; grid-template-columns: 1fr 300px; align-items: start; gap: 36px; margin-top: 45px; }
+.editor-section { background: white; border: 1px solid #e4e4e6; padding: clamp(20px, 3vw, 38px); margin-bottom: 24px; }
+.editor-section__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.editor-section h2, .editor-side h2 { margin: 0; font-family: var(--serif); font-size: 1.8rem; font-weight: 400; }
+.editor-fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.editor-fields .field--wide { grid-column: 1 / -1; }
+.editor-side { position: sticky; top: 24px; background: #eae9ef; padding: 27px; }
+.editor-side p, .editor-side li { color: #5d6170; font-size: .78rem; line-height: 1.85; }
+.editor-side ol { padding-left: 18px; }
+.editor-side .field { margin-top: 15px; }
+.editor-actions { display: grid; gap: 13px; margin-top: 25px; }
+.editor-actions button { width: 100%; }
+.editor-secondary { border: 1px solid #aeb0bc; background: transparent; padding: 13px 16px; font-size: .78rem; }
+.editor-secondary:hover { background: white; }
+.editor-status { margin-top: 16px; min-height: 2em; white-space: pre-wrap; }
+.editor-work { border-top: 1px solid var(--line); padding: 25px 0 4px; }
+.editor-work:first-child { border-top: 0; padding-top: 0; }
+.editor-work__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 21px; }
+.editor-work__head h3 { margin: 0; font-size: 1rem; font-weight: 550; }
+.editor-work__actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.editor-work__actions button { border: 1px solid #d4d6dc; background: #fff; padding: 7px 9px; font-size: .72rem; }
+.editor-work__actions button:hover { background: #eeeef2; }
+.editor-news { border-top: 1px solid var(--line); padding: 22px 0; }
+.editor-news:first-child { border-top: 0; padding-top: 0; }
+.editor-news__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.editor-news__head h3 { margin: 0; font-size: .9rem; font-weight: 550; }
+.editor-check { display: flex; align-items: center; gap: 10px; color: #4d5260; font-size: .79rem; }
+.editor-check input { width: 17px; height: 17px; }
+.editor-tip { color: #747986; font-size: .73rem; line-height: 1.8; }

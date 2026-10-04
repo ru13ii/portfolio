@@ -1,0 +1,44 @@
+---
+// A shortened four-octave keyboard: 28 naturals, with the 2 + 3 accidental pattern.
+const whiteKeys = Array.from({ length: 28 }, (_, i) => i);
+const blackKeys = whiteKeys.filter(i => [0, 1, 3, 4, 5].includes(i % 7));
+---
+<svg class="grand-piano" viewBox="0 0 940 680" fill="none" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="piano-lacquer" x1="160" y1="35" x2="600" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#242426"/><stop offset=".25" stop-color="#090909"/><stop offset=".62" stop-color="#141414"/><stop offset="1" stop-color="#030303"/>
+    </linearGradient>
+    <linearGradient id="piano-edge" x1="480" y1="35" x2="510" y2="598" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6a6966"/><stop offset=".1" stop-color="#222"/><stop offset=".62" stop-color="#050505"/><stop offset="1" stop-color="#474643"/>
+    </linearGradient>
+    <linearGradient id="piano-reflection" x1="300" y1="45" x2="640" y2="460" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity=".1"/><stop offset=".62" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ivory-key" x1="57" y1="0" x2="143" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c6c3ba"/><stop offset=".06" stop-color="#faf8f0"/><stop offset=".76" stop-color="#fffef8"/><stop offset="1" stop-color="#bab8b0"/>
+    </linearGradient>
+    <linearGradient id="ebony-key" x1="90" y1="0" x2="143" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#050505"/><stop offset=".1" stop-color="#333332"/><stop offset=".27" stop-color="#181818"/><stop offset="1" stop-color="#020202"/>
+    </linearGradient>
+    <clipPath id="piano-lid-clip"><path d="M158 50H712C817 50 881 85 893 144C906 207 864 250 783 271C724 286 663 291 618 328C555 380 556 475 497 530C456 569 395 582 326 582H158Z"/></clipPath>
+  </defs>
+  <!-- The straight bass side runs across the top; the treble side bends inward below. -->
+  <path class="piano-case" d="M44 38H715C827 38 891 76 904 141C918 212 872 262 787 284C732 297 672 300 626 337C566 386 566 482 505 539C462 580 399 594 325 594H44Z" fill="#080808" stroke="#050505" stroke-width="5"/>
+  <path d="M151 45H714C823 45 885 80 898 143C911 210 868 256 785 278C728 292 667 296 622 332C560 383 561 479 501 535C459 574 397 588 325 588H151Z" fill="url(#piano-lacquer)" stroke="url(#piano-edge)" stroke-width="2"/>
+  <g clip-path="url(#piano-lid-clip)">
+    <path d="M172 49H920L492 579H250Z" fill="url(#piano-reflection)"/>
+    <path d="M165 56H706C814 56 873 91 884 147" stroke="#b5b1a8" stroke-opacity=".24"/>
+    <path d="M884 155C895 211 851 247 780 265" stroke="#fff" stroke-opacity=".1"/>
+  </g>
+  <!-- Fallboard seam, hinge pins and a thin felt strip give the keyboard a real case. -->
+  <path d="M155 51V580" stroke="#000" stroke-width="5"/>
+  <path d="M158 52V578" stroke="#76716a" stroke-opacity=".4"/>
+  {[128, 314, 503].map(y => <rect x="154" y={y} width="4" height="22" rx="1" fill="#9c8b69"/>)}
+  <rect x="50" y="74" width="98" height="488" rx="2" fill="#010101"/>
+  <rect x="143" y="80" width="3" height="477" fill="#794b4c"/>
+  <g class="piano-keyboard">
+    {whiteKeys.map(i => <rect class="piano-white-key" x="57" y={82+i*17} width="85" height="16.3" rx="1.2" fill="url(#ivory-key)"/>)}
+    {blackKeys.map(i => <g class="piano-black-key"><rect x="91" y={82+(i+1)*17-5} width="52" height="10.5" rx="1" fill="#000"/><rect x="93" y={81+(i+1)*17-5} width="49" height="9" rx="1" fill="url(#ebony-key)"/><path d={`M97 ${82+(i+1)*17-4}H138`} stroke="#85827d" stroke-opacity=".3" stroke-width=".7"/></g>)}
+  </g>
+  <path d="M50 75V562" stroke="#595853" stroke-opacity=".45"/>
+</svg>

@@ -1,25 +1,31 @@
 ---
 import content from '../data/content.json';
-
 const base = import.meta.env.BASE_URL;
 const links = [
+  { label: 'Home', href: base, match: '/' },
   { label: 'Works', href: `${base}works/`, match: '/works/' },
   { label: 'About', href: `${base}about/`, match: '/about/' },
   { label: 'Contact', href: `${base}contact/`, match: '/contact/' },
 ];
-const pathname = Astro.url.pathname;
 ---
 <header class="site-header">
-  <div class="site-header__inner shell">
+  <div class="shell site-header__inner">
     <a class="brand" href={base} aria-label={`${content.site.name} トップページ`}>
-      <span class="brand__mark" aria-hidden="true">R<span>•</span></span>
-      <span class="brand__name">{content.site.name}</span>
+      <img src={`${base}rubii-icon.png`} alt="" width="36" height="36" />
+      <span>{content.site.name}</span>
     </a>
-    <nav class="site-nav" aria-label="メインメニュー">
-      {links.map((link) => (
-        <a href={link.href} aria-current={pathname.includes(link.match) ? 'page' : undefined}>{link.label}</a>
+    <span class="header-signature">COMPOSER & VOCALOID PRODUCER</span>
+    <nav class="piano-nav" aria-label="メインメニュー">
+      {links.map((link, index) => (
+        <a class="piano-key" href={link.href} aria-current={Astro.url.pathname.replace(/\/$/, '') === link.href.replace(/\/$/, '') ? 'page' : undefined}>
+          <span class="key-number" aria-hidden="true">0{index}</span>
+          <span>{link.label}</span>
+        </a>
       ))}
+      <!-- Black keys belong to the keyboard frame, above every white-key stacking context. -->
+      <span class="nav-accidental nav-accidental--1" aria-hidden="true"></span>
+      <span class="nav-accidental nav-accidental--2" aria-hidden="true"></span>
+      <span class="nav-accidental nav-accidental--3" aria-hidden="true"></span>
     </nav>
-    <a class="header-contact" href={`${base}contact/`}>制作のご相談 <span aria-hidden="true">↗</span></a>
   </div>
 </header>

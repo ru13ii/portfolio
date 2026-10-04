@@ -1,0 +1,9 @@
+---
+import Note from './Note.astro';
+---
+<div class="music-air" aria-hidden="true">
+  <svg class="air-staves" viewBox="0 0 1440 680" preserveAspectRatio="none" fill="none">
+    {[0,8,16,24,32].map(y => <path d={`M430 ${590+y}C660 ${642+y} 735 ${333+y} 1010 ${385+y}S1260 ${584+y} 1440 ${508+y}`} />)}
+  </svg>
+  {[1,2,3,4,5,6].map(i => <span class={`air-note air-note--${i}`}><Note /></span>)}
+</div>

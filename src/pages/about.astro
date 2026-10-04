@@ -4,25 +4,15 @@ import content from '../data/content.json';
 const base = import.meta.env.BASE_URL;
 ---
 <SiteLayout title={`About | ${content.site.name}`} description={`${content.site.name}のプロフィールと活動について。`}>
-  <div class="page-heading">
-    <div class="shell">
-      <p class="eyebrow">Composer / Vocaloid Producer</p>
-      <h1>About</h1>
-      <p>{content.site.aboutIntro}</p>
-    </div>
-  </div>
-  <section class="shell about-content" aria-labelledby="about-title">
-    <div class="about-visual" aria-hidden="true"><span>R</span></div>
-    <div class="about-copy">
-      <p class="eyebrow">{content.site.nameJa} / {content.site.name}</p>
-      <h2 id="about-title">{content.site.aboutTitle}</h2>
-      <p>{content.site.aboutText}</p>
+  <div class="shell page-heading"><p class="eyebrow">02 / BEHIND THE NOTES</p><h1>About<span>作り手について</span></h1><p>{content.site.aboutIntro}</p></div>
+  <section class="shell about-sheet about-sheet--page" aria-labelledby="about-title">
+    <div class="sheet-portrait"><img src={`${base}rubii-icon.png`} alt="るびぃのアイコン" width="400" height="400" /><span class="portrait-signature">{content.site.name}<span>{content.site.nameJa}</span></span></div>
+    <div class="sheet-copy"><p class="eyebrow">{content.site.role}</p><h2 id="about-title">{content.site.aboutTitle}</h2><p>{content.site.aboutText}</p>
       <div class="about-links">
-        <a href={content.site.youtubeUrl} target="_blank" rel="noopener noreferrer">YouTube ↗ <span class="sr-only">新しいタブで開く</span></a>
-        <a href={content.site.soundcloudUrl} target="_blank" rel="noopener noreferrer">SoundCloud ↗ <span class="sr-only">新しいタブで開く</span></a>
-        <a href={content.site.xUrl} target="_blank" rel="noopener noreferrer">X ↗ <span class="sr-only">新しいタブで開く</span></a>
+        <a href={content.site.youtubeUrl} target="_blank" rel="noopener noreferrer">YouTube ↗<span class="sr-only"> 新しいタブで開く</span></a>
+        <a href={content.site.soundcloudUrl} target="_blank" rel="noopener noreferrer">SoundCloud ↗<span class="sr-only"> 新しいタブで開く</span></a>
+        <a href={content.site.xUrl} target="_blank" rel="noopener noreferrer">X ↗<span class="sr-only"> 新しいタブで開く</span></a>
       </div>
-      <p style="margin-top: 54px"><a class="text-link" href={`${base}contact/`}>制作のご相談 <span aria-hidden="true">↗</span></a></p>
     </div>
   </section>
 </SiteLayout>

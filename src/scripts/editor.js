@@ -232,7 +232,7 @@ document.getElementById('add-work').addEventListener('click', () => {
   });
   renderWorks();
   markDirty();
-  workList.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  workList.lastElementChild?.scrollIntoView({ behavior: 'auto', block: 'center' });
 });
 
 function validate() {

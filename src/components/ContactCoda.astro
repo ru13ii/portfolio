@@ -1,0 +1,11 @@
+---
+import content from '../data/content.json';
+const base = import.meta.env.BASE_URL;
+---
+<section class="contact-coda shell" aria-labelledby="coda-heading">
+  <div class="coda-end" aria-hidden="true"><span class="staff-lines"></span></div>
+  <div class="coda-content">
+    <div><p class="eyebrow">LET'S MAKE MUSIC TOGETHER</p><h2 id="coda-heading">{content.site.homeContactTitle}</h2><p>{content.site.homeContactText}</p></div>
+    <a class="round-link" href={`${base}contact/`}><span>制作のご相談</span><span aria-hidden="true">↗</span></a>
+  </div>
+</section>

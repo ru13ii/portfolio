@@ -1,50 +1,57 @@
 # RuBii Portfolio
 
-ボカロP・作曲家 **RuBii（るびぃ）** のポートフォリオサイトです。オリジナル楽曲や活動情報、プロフィール、制作のご相談窓口を掲載しています。
+ボカロP・作曲家 **RuBii（るびぃ）** のポートフォリオサイトです。
 
-**[サイトを見る](https://ru13ii.github.io/portfolio/)**
+**[サイトを見る](https://ru13ii.github.io/portfolio/)** · [作品](https://ru13ii.github.io/portfolio/works/) · [編集ページ](https://ru13ii.github.io/portfolio/edit/)
 
 ## 掲載内容
 
-- **Works** — 楽曲の試聴、担当・起用先の紹介、ジャンル別の絞り込み
-- **About** — プロフィールと活動リンク
-- **Contact** — 楽曲制作・BGM制作のご相談
-- **News** — 新作や活動のお知らせ
+- Home: グランドピアノの上面図と名義・代表曲、作品・プロフィール・活動情報。
+- Works: オリジナル楽曲の試聴、担当・起用先、ジャンル別の絞り込み。
+- About: プロフィールと活動リンク。
+- Contact: Formspreeを使った楽曲制作・BGM制作の問い合わせ。
+- 編集ページ: 文章・作品・お知らせをGitHubへ保存、JSON書き出し。
+
+生成りの紙面と黒いグランドピアノ、五線・音符を組み合わせたデザインです。メニューには4つの白鍵と3つの黒鍵を配置しています。PCでは背景の音符がゆっくり漂い、スマホ・タッチ操作・OSの動き削減では演出を停止します。
 
 [YouTube](https://www.youtube.com/@ru13ii) · [SoundCloud](https://soundcloud.com/rubii-684907841) · [X](https://x.com/ru13ii_)
 
-## 技術構成
-
-Astro / Tailwind CSS / JSON / GitHub Pages
-
-サイトの文章・作品・お知らせを `src/data/content.json` で管理し、静的ページとして生成します。
-
 ## 開発
 
-Node.js 24を使用します。
+Astro / Tailwind CSS / JSON / GitHub Pages。Node.js 24を使用します。
 
 ```sh
 npm ci
 npm run dev
 ```
 
-ターミナルに表示されたローカルURLをブラウザで開いてください。
+ターミナルに表示されたURLで確認します。通常は http://127.0.0.1:4321/ です。
 
 ```sh
-npm run build    # 公開用ファイルをdist/に生成
-npm run preview  # ビルドしたサイトを手元で確認
+npm run build
+npm run preview
 ```
 
-## デプロイ
+## 編集する場所
 
-`main` の更新時にGitHub Actionsがビルドし、GitHub Pagesへ自動公開します。公開URLとサブパスは、GitHubのリポジトリ名から設定します。
+- src/data/content.json: 文章・作品・お知らせ・リンク・フォーム送信先。
+- public/rubii-icon.png: ヘッダー・About・タブで使う人物アイコン。
+- src/components/GrandPiano.astro: ピアノの上面図と鍵盤。
+- src/styles/global.css / piano-space.css: 共通レイアウト・鍵盤・ジャンル索引・演出。
+- src/scripts/music-space.js: 画面外・非表示時の背景音符の停止。
 
-VS Codeと編集ページの両方を使う場合は、編集前にGitHub側の変更をプルしてください。プッシュが拒否された場合の手順は[開発・運用ガイド](docs/operations.md#vs-codeからgithubへ反映する)を参照してください。
+公開サイトの編集ページでは、対象リポジトリにContentsの書き込み権限を持つアクセストークンを保存時に入力します。トークンはファイルやブラウザーの保存領域へ記録しません。詳細は [開発・運用ガイド](docs/operations.md) を参照してください。
 
-## ドキュメント
+## 公開
 
-- [要件・仕様](docs/requirements.md)
-- [開発・編集・フォーム設定の手順](docs/operations.md)
-- [設計・変更履歴](docs/development.md)
+mainへのプッシュで .github/workflows/deploy.yml がビルドし、GitHub Pagesへ公開します。GitHub Actions内のGITHUB_REPOSITORYから公開パス /portfolio/ を設定します。独自ドメインではSITE_URLとSITE_BASEを設定してください。
 
-現在のバージョン: **0.2.2**
+VS Codeで編集するときは、編集前のプル、保存・コミット・プッシュ、Actionsの成功確認の順で進めます。
+
+## 設計資料
+
+- [現行の仕様と正式版への移行](docs/production-adoption-0.5.0.md)
+- [鍵盤・索引・UIの調整](docs/ui-refinement-0.4.1.md)
+- [ピアノ形状の考察](docs/piano-refinement-0.4.0.md)
+- [設計・作業記録](docs/development.md)
+- [開発・運用ガイド](docs/operations.md)

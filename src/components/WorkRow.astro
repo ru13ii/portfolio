@@ -1,0 +1,23 @@
+---
+import MediaPreview from './MediaPreview.astro';
+const { work, index = 0, heading = 'h2' } = Astro.props;
+const Heading = heading;
+---
+<article class="work-row" data-work-genre={work.genre}>
+  <span class="work-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+  <MediaPreview work={work} />
+  <div class="work-info">
+    <p class="work-category">{work.genre}<span aria-hidden="true"> / </span>{work.year}</p>
+    <Heading>{work.title}</Heading>
+    {work.description && <p class="work-description">{work.description}</p>}
+    <dl class="work-credits">
+      {work.role && <div><dt>担当</dt><dd>{work.role}</dd></div>}
+      {work.usage && <div><dt>作品・起用先</dt><dd>{work.usage}</dd></div>}
+      {work.vocal && <div><dt>Vocal</dt><dd>{work.vocal}</dd></div>}
+    </dl>
+    <div class="work-links">
+      {work.soundcloudUrl && <a href={work.soundcloudUrl} target="_blank" rel="noopener noreferrer">SoundCloud ↗<span class="sr-only"> 新しいタブで開く</span></a>}
+      {work.mediaUrl && <a href={work.mediaUrl} target="_blank" rel="noopener noreferrer">公開ページ ↗<span class="sr-only"> 新しいタブで開く</span></a>}
+    </div>
+  </div>
+</article>
