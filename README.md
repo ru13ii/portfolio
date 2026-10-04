@@ -18,7 +18,7 @@
 
 ## 開発
 
-Astro / Tailwind CSS / JSON。VercelとGitHub Pagesの静的配信に対応しています。Node.js 24を使用します。
+Astro / Tailwind CSS / JSON / GitHub Pages。Node.js 24を使用します。
 
 ```sh
 npm ci
@@ -44,18 +44,6 @@ npm run preview
 
 ## 公開
 
-### Vercel
-
-[Vercelの新規プロジェクト画面](https://vercel.com/new)から `ru13ii/portfolio` をImportします。FrameworkはAstro、Root Directoryはリポジトリのルート、Production Branchはmain、Node.jsは24.x。ビルドと出力先はvercel.jsonで指定しています。Vercelではドメイン直下で公開するため、SITE_BASEは未設定か `/` にします。
-
-GitHubへのmainのプッシュと編集ページからの保存で、Vercelが自動ビルドします。VercelのDeploymentsがReadyになったら新しいサイトを確認します。Vercelの公開URLはプロジェクト作成後に確定します。
-
-楽曲制作の依頼獲得を目的としたサービスの宣伝は、Vercelの利用条件では商用利用に該当します。無料Hobbyは非商用限定のため、Pro以上のプランで運用してください。プランと契約は本人が選択します。[Vercelの商用利用条件](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage)
-
-詳しい設定・確認手順は [Vercelへの移行](docs/vercel-hosting.md) を参照してください。
-
-### GitHub Pages
-
 mainへのプッシュで .github/workflows/deploy.yml がビルドし、GitHub Pagesへ公開します。GitHub Actions内のGITHUB_REPOSITORYから公開パス /portfolio/ を設定します。独自ドメインではSITE_URLとSITE_BASEを設定してください。
 
 VS Codeで編集するときは、編集前のプル、保存・コミット・プッシュ、Actionsの成功確認の順で進めます。
@@ -63,7 +51,7 @@ VS Codeで編集するときは、編集前のプル、保存・コミット・�
 ## 設計資料
 
 - [現行の仕様と正式版への移行](docs/production-adoption-0.5.0.md)
-- [Vercelの公開設定](docs/vercel-hosting.md)
+- [ホスティングの検討とGitHub Pages継続の判断](docs/vercel-hosting.md)
 - [鍵盤・索引・UIの調整](docs/ui-refinement-0.4.1.md)
 - [ピアノ形状の考察](docs/piano-refinement-0.4.0.md)
 - [設計・作業記録](docs/development.md)

@@ -62,11 +62,9 @@ Formspreeの無料枠は月50件（2026-10-03確認）。最新の条件は[料�
 
 リポジトリの **Settings → Pages → Build and deployment → Source** は **GitHub Actions** に設定済み。`.github/workflows/deploy.yml` がビルド・公開を担当する。独自ドメインの利用時は `SITE_URL` と `SITE_BASE` を見直す。
 
-## Vercelの設定
+## 公開先の決定
 
-0.5.1からVercelの静的配信にも対応。GitHubの `ru13ii/portfolio` をImportし、mainをProduction Branchに設定する。Root Directoryはルート、FrameworkはAstro、Node.jsは24.x。ビルド・インストール・出力先はvercel.jsonで指定する。Vercelはドメイン直下 `/` で公開するため、SITE_BASEに `/portfolio/` を設定しない。
-
-公開URLはプロジェクトの作成後に確定する。接続後はmainへのpushと編集ページからのJSON保存でVercelが自動公開する。DeploymentsがReadyになったことを確認する。移行手順・利用プラン・確認項目は [Vercelへの公開設定](vercel-hosting.md) を参照。
+2026-10-04にVercelを検討したが、無料運用を優先するユーザーの選択によりGitHub Pagesを継続する。Vercelでのサイト公開は行っていない。検討の詳細は [公開先の検討記録](vercel-hosting.md) を参照。
 
 ## 内容の確認事項
 
