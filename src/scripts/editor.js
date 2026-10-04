@@ -346,7 +346,7 @@ saveButton.addEventListener('click', async () => {
     if (!saveResponse.ok) throw new Error(`保存できませんでした（${saveResponse.status}）。トークンの権限や変更の競合を確認してください。`);
     syncedContent = structuredClone(content);
     dirty = false;
-    showStatus('保存しました。GitHub Pagesへの反映には数分かかる場合があります。');
+    showStatus('保存しました。公開サイトへの反映には数分かかる場合があります。');
     tokenInput.value = '';
   } catch (cause) {
     showStatus(cause instanceof Error ? cause.message : '保存できませんでした。', true);
