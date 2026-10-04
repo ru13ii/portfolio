@@ -1,4 +1,4 @@
-# セキュリティ監査・対策記録 — 0.5.3
+# セキュリティ監査・対策記録 — 0.5.3 / 0.5.4
 
 監査日: 2026-10-05 / 対象: ru13ii/portfolio、GitHub Pages。依頼: 公開を継続する前提で脆弱性を広く点検し、発見した問題を対策する。既存デザイン、作品データ、無料運用、VS Codeと編集ページからの更新を維持する。
 
@@ -28,7 +28,7 @@
 ## 検証結果
 
 - `npm audit`: 修正前High 1件 → 修正後全レベル0件。取得時点のnpmデータベースに対する結果であり、未知の脆弱性を否定しない。
-- `npm test`: 19件成功。100作品、危険なURL・偽装ホスト・不正データ、編集元/フレーム制限、401・409・リモート競合・検証不能時の書き込み拒否、固定送信先とmainを確認。
+- `npm test`: 24件成功。100作品、危険なURL・偽装ホスト・不正データ、編集元/フレーム制限、401・409・リモート競合・検証不能時の書き込み拒否、固定送信先とmainを確認。
 - 実際に一時的な不正 `coverUrl` を与えた `npm run build`: 失敗を確認。元のJSONを復元し再ビルド成功。作品データは変更していない。
 - `GITHUB_REPOSITORY=ru13ii/portfolio npm run build` と `npm run check:dist`: 全5ページ成功。CSP、インラインスクリプトのハッシュ、インラインイベント/スタイル属性の不在、秘密ファイル・ソースマップ等の混入防止。
 - Gitleaks 8.30.1（公式配布物のSHA256検証済み）: Git履歴22コミット、現在のソース、distで検出0件。ログはredactを有効にし、リポジトリ外へ保存。検出ルールにない秘密を保証するものではない。
@@ -44,7 +44,7 @@
 - Secret Protection、Push protection、非公開の脆弱性報告を有効化。
 - Actionsの既定トークンはread-only、ActionsによるPR作成/承認は無効を確認。利用ActionはGitHub作成または所有者配下に限定。外部コントリビューターのPR実行は全員承認必須へ変更。
 - Formspree設定画面: Formshield有効、CAPTCHA無効、HTTP API無効、リダイレクト未設定を確認。フォーム受信の履歴・個人データは監査で読み取らない。
-- CodeQL: JavaScript/TypeScriptとGitHub Actionsのdefault setupを有効化。スキャンの最終結果は公開確認の節に記載。
+- CodeQL: JavaScript/TypeScriptとGitHub Actionsのdefault setupを有効化。スキャンをmainへのpush・PR・毎週に実行。
 
 ## 残る制約と運用
 
@@ -61,3 +61,10 @@
 - [Astro CSP設定](https://docs.astro.build/en/reference/configuration-reference/#securitycsp)
 - [GitHub Actionsの安全な利用](https://docs.github.com/en/actions/reference/security/secure-use)
 - [MDN: frame-ancestors](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors)
+
+## 公開確認と追加修正（0.5.4）
+
+- 0.5.3はGitHub連携経由で反映し、公開ワークフロー [37228380172](https://github.com/ru13ii/portfolio/actions/runs/37228380172) のbuild/deploy成功を確認。公開5ページのHTTP 200とCSPを確認。ローカルも同一内容のGitHub履歴へ同期した。
+- CodeQLは旧コードのYouTubeホスト判定の指摘を修正済みと判定。一方、新設した検査スクリプトの小文字scriptタグ用正規表現に `js/bad-tag-filter` の指摘が出た。訪問者側の実行コードではないが、検査の抜けを残さないため0.5.4でHTMLパーサーparse5へ置き換えた。大文字タグ・引用符内の `>`・イベント属性等5件の回帰テストを追加。
+- parse5は開発用依存に限定し、公開ページの配信コードには含めない。参考: [parse5の公式API](https://parse5.js.org/functions/parse5.parse.html)。
+- PCに保存されたGitトークンはworkflow更新権限がないため、workflowファイルを含む0.5.3だけ既存のGitHub連携で反映した。トークンの権限自体を拡張していない。通常のコンテンツ編集・プッシュは引き続き可能。

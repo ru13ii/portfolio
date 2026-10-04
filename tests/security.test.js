@@ -54,3 +54,14 @@ test('invalid content never reaches network; write failures propagate',async()=>
  let calls=0;await assert.rejects(saveContent('test-only-token',{},original,async()=>{calls++;}));assert.equal(calls,0);
  await assert.rejects(saveContent('test-only-token',original,original,async()=>++calls===1?current():{ok:false,status:409}),/409/);
 });
+
+// Regression for CodeQL js/bad-tag-filter: the verifier must follow HTML parsing.
+const { checkHtml } = await import('../scripts/html-policy.mjs');
+const policy = `default-src 'self';object-src 'none';base-uri 'none';script-src-attr 'none';style-src-attr 'none';form-action ${FORM_ENDPOINT};connect-src ${GITHUB_CONTENT_URL} ${FORM_ENDPOINT}`;
+const fixture = (body) => `<!doctype html><html><head><meta http-equiv="content-security-policy" content="${policy}"></head><body>${body}</body></html>`;
+for (const markup of ['<SCRIPT>alert(1)</SCRIPT>', '<ScRiPt title="a > b">alert(1)</ScRiPt >', '<img src=x ONERROR = "alert(1)">', '<div STYLE="color:red">text</div>']) {
+  test(`HTML verifier rejects ${markup}`, () => assert.throws(() => checkHtml(fixture(markup))));
+}
+test('HTML verifier accepts plain text that resembles an escaped tag', () => {
+  assert.doesNotThrow(() => checkHtml(fixture('&lt;SCRIPT&gt;safe text&lt;/SCRIPT&gt;')));
+});
