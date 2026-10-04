@@ -1,7 +1,8 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import content from '../data/content.json';
-const enabled = /^https:\/\//.test(content.site.formEndpoint);
+import content from '../lib/content.js';
+import { FORM_ENDPOINT } from '../lib/content-policy.js';
+const enabled = content.site.formEndpoint === FORM_ENDPOINT;
 ---
 <SiteLayout title={`Contact | ${content.site.name}`} description="RuBiiへの楽曲制作・BGM制作のご相談はこちら。">
   <div class="shell page-heading"><p class="eyebrow">04 / A NEW COMPOSITION</p><h1>Contact<span>制作のご相談</span></h1><p>{content.site.contactIntro}</p></div>
@@ -14,22 +15,22 @@ const enabled = /^https:\/\//.test(content.site.formEndpoint);
     <!-- JavaScriptが無効でも通常POSTでFormspreeへ送信できる。 -->
     <form class="contact-form" id="contact-form" action={enabled ? content.site.formEndpoint : undefined} method="POST" data-endpoint={content.site.formEndpoint}>
       {!enabled && <p class="contact-form__note">フォームは現在準備中です。ご連絡はXからお願いいたします。</p>}
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" hidden aria-hidden="true" />
       <div class="field">
         <label for="contact-name">お名前</label>
-        <input id="contact-name" name="name" autocomplete="name" required />
+        <input id="contact-name" name="name" autocomplete="name" maxlength="100" required />
       </div>
       <div class="field">
         <label for="contact-email">メールアドレス</label>
-        <input id="contact-email" name="email" type="email" autocomplete="email" required />
+        <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required />
       </div>
       <div class="field">
         <label for="contact-subject">ご相談内容</label>
-        <input id="contact-subject" name="subject" required />
+        <input id="contact-subject" name="subject" maxlength="200" required />
       </div>
       <div class="field">
         <label for="contact-message">メッセージ</label>
-        <textarea id="contact-message" name="message" required></textarea>
+        <textarea id="contact-message" name="message" maxlength="10000" required></textarea>
       </div>
       <button class="button-primary contact-form__submit" type="submit" disabled={!enabled}>送信する <span aria-hidden="true">↗</span></button>
       <p class="contact-form__status" id="contact-status" role="status" aria-live="polite"></p>
@@ -38,18 +39,21 @@ const enabled = /^https:\/\//.test(content.site.formEndpoint);
 </SiteLayout>
 
 <script>
+  import { FORM_ENDPOINT } from '../lib/content-policy.js';
   const form = document.getElementById('contact-form');
   const status = document.getElementById('contact-status');
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const endpoint = form.dataset.endpoint;
-    if (!endpoint || !endpoint.startsWith('https://')) return;
+    if (endpoint !== FORM_ENDPOINT) return;
     const button = form.querySelector('button[type="submit"]');
     button.disabled = true;
     status.textContent = '送信しています…';
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
+        credentials: 'omit',
+        redirect: 'error',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
       });

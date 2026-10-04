@@ -22,10 +22,13 @@ const embedUrl = mediaEmbedUrl(work.mediaType, work.mediaUrl);
   ) : <p class="media-unavailable">再生リンクは準備中です</p>}
 </div>
 <script>
+  import { allowedEmbed } from '../lib/media.js';
   document.querySelectorAll<HTMLButtonElement>('[data-media-embed]').forEach((button) => {
     button.addEventListener('click', () => {
+      if (!allowedEmbed(button.dataset.mediaEmbed)) return;
       const frame = document.createElement('iframe');
       frame.src = button.dataset.mediaEmbed!;
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
       frame.title = button.dataset.mediaTitle!;
       frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
       frame.allowFullscreen = true;

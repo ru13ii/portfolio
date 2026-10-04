@@ -28,7 +28,10 @@ npm run dev
 ターミナルに表示されたURLで確認します。通常は http://127.0.0.1:4321/ です。
 
 ```sh
+npm test
+npm audit --audit-level=low
 npm run build
+npm run check:dist
 npm run preview
 ```
 
@@ -44,9 +47,17 @@ npm run preview
 
 ## 公開
 
-mainへのプッシュで .github/workflows/deploy.yml がビルドし、GitHub Pagesへ公開します。GitHub Actions内のGITHUB_REPOSITORYから公開パス /portfolio/ を設定します。独自ドメインではSITE_URLとSITE_BASEを設定してください。
+mainへのプッシュで .github/workflows/deploy.yml がビルドし、GitHub Pagesへ公開します。GitHub Actions内のGITHUB_REPOSITORYから公開パス /portfolio/ を設定します。独自ドメインではSITE_URLとSITE_BASE、および編集ページの許可URLを見直してください。
 
 VS Codeで編集するときは、編集前のプル、保存・コミット・プッシュ、Actionsの成功確認の順で進めます。
+
+## セキュリティ
+
+JSONのURL・データ形式は編集時とビルド時に検証します。不正なデータや既知の依存関係の脆弱性を検出した場合、公開処理を停止します。毎週の自動監査とDependabotの更新PRも設定しています。
+
+編集画面のGitHub保存先は `ru13ii/portfolio` の `main` に固定しています。トークン欄は保存開始時・ページ離脱時に消去し、公式URLまたはローカルの編集画面を直接開いた場合だけ入力できます。フォーム送信先の変更は `src/lib/content-policy.js` とJSONをあわせて更新してください。
+
+詳細は [監査結果・残る制約](docs/security-audit-0.5.3.md) と [報告窓口](SECURITY.md) を参照してください。
 
 ## 設計資料
 

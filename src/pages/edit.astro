@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import content from '../data/content.json';
+import content from '../lib/content.js';
 ---
 <SiteLayout title={`編集 | ${content.site.name}`} description="RuBiiのサイト内容を編集します。" noindex>
   <div class="shell edit-page">
@@ -47,7 +47,7 @@ import content from '../data/content.json';
             <div class="field field--wide"><label for="edit-x">X URL</label><input id="edit-x" type="url" data-site-field="xUrl" /></div>
             <div class="field field--wide"><label for="edit-form-endpoint">フォーム送信先 URL</label><input id="edit-form-endpoint" type="url" data-site-field="formEndpoint" placeholder="後で設定できます" /></div>
           </div>
-          <p class="editor-tip">フォーム送信先が空欄の間は、Contactページの送信ボタンは無効になります。</p>
+          <p class="editor-tip">送信先は承認済みURLのみ利用できます。空欄の間は、Contactページの送信ボタンは無効になります。</p>
         </section>
 
         <section class="editor-section" aria-labelledby="editor-works-heading">
@@ -67,12 +67,12 @@ import content from '../data/content.json';
           <li>リポジトリの内容を書き込めるトークンを作る</li>
           <li>下の欄を入力して保存する</li>
         </ol>
-        <div class="field"><label for="github-owner">GitHubユーザー名</label><input id="github-owner" autocomplete="username" value="ru13ii" /></div>
-        <div class="field"><label for="github-repo">リポジトリ名</label><input id="github-repo" value="portfolio" /></div>
-        <div class="field"><label for="github-token">アクセストークン</label><input id="github-token" type="password" autocomplete="off" placeholder="保存時のみ入力" /></div>
+        <div class="field"><label for="github-owner">GitHubユーザー名</label><input id="github-owner" autocomplete="username" value="ru13ii" readonly /></div>
+        <div class="field"><label for="github-repo">リポジトリ名</label><input id="github-repo" value="portfolio" readonly /></div>
+        <div class="field"><label for="github-token">アクセストークン</label><input id="github-token" type="password" autocomplete="off" placeholder="保存時のみ入力" disabled /></div>
         <p>トークンはサイトのファイルやブラウザの保存領域に記録しません。対象リポジトリだけに Contents の書き込み権限を付けてください。</p>
         <div class="editor-actions">
-          <button class="button-primary" type="button" id="save-github">GitHubへ保存 <span aria-hidden="true">↗</span></button>
+          <button class="button-primary" type="button" id="save-github" disabled>GitHubへ保存 <span aria-hidden="true">↗</span></button>
           <button class="editor-secondary" type="button" id="download-json">JSONをダウンロード</button>
         </div>
         <p class="editor-status" id="editor-status" role="status" aria-live="polite"></p>

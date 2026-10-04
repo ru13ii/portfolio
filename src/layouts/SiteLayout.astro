@@ -3,7 +3,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import '../styles/piano-space.css';
-import content from '../data/content.json';
+import content from '../lib/content.js';
+import { GITHUB_CONTENT_URL } from '../lib/content-policy.js';
 
 const {
   title = `${content.site.name} | ボカロP・作曲家`,
@@ -17,6 +18,8 @@ const base = import.meta.env.BASE_URL;
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
+    {noindex && <meta http-equiv="content-security-policy" content={`connect-src ${GITHUB_CONTENT_URL}; img-src 'self'; frame-src 'none'; form-action 'none'`} />}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f8f7f4" />

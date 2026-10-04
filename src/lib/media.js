@@ -1,22 +1,19 @@
-export function youtubeId(url) {
-  if (!url) return '';
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname === 'youtu.be') return parsed.pathname.slice(1);
-    if (parsed.hostname.endsWith('youtube.com')) return parsed.searchParams.get('v') || '';
-  } catch {
-    return '';
-  }
-  return '';
-}
+import { youtubeId, soundcloudUrl, httpsUrl } from './content-policy.js';
+export { youtubeId } from './content-policy.js';
 
 export function mediaEmbedUrl(type, url) {
   if (type === 'youtube') {
     const id = youtubeId(url);
-    return id ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1` : '';
+    return id ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1` : '';
   }
-  if (type === 'soundcloud' && /^https:\/\//.test(url || '')) {
+  if (type === 'soundcloud' && soundcloudUrl(url)) {
     return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=true&visual=true`;
   }
   return '';
+}
+export function allowedEmbed(value) {
+  const url = httpsUrl(value);
+  if (!url) return false;
+  return (url.hostname === 'www.youtube-nocookie.com' && /^\/embed\/[\w-]{11}$/.test(url.pathname))
+    || (url.hostname === 'w.soundcloud.com' && url.pathname === '/player/' && Boolean(soundcloudUrl(url.searchParams.get('url'))));
 }

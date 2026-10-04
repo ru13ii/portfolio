@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
-import content from '../data/content.json';
+import content from '../lib/content.js';
 const base = import.meta.env.BASE_URL;
 ---
 <SiteLayout title={`About | ${content.site.name}`} description={`${content.site.name}のプロフィールと活動について。`}>

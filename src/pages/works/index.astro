@@ -1,7 +1,7 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import WorkRow from '../../components/WorkRow.astro';
-import content from '../../data/content.json';
+import content from '../../lib/content.js';
 ---
 <SiteLayout title={`Works | ${content.site.name}`} description="RuBiiのオリジナル楽曲を紹介します。">
   <div class="shell page-heading"><p class="eyebrow">01 / THE COMPOSITIONS</p><h1>Works<span>作品</span></h1><p>{content.site.worksIntro}</p></div>

@@ -31,3 +31,6 @@
 .editor-check { display: flex; align-items: center; gap: 10px; color: #4d5260; font-size: .79rem; }
 .editor-check input { width: 17px; height: 17px; }
 .editor-tip { color: #747986; font-size: .73rem; line-height: 1.8; }
+
+.editor-check { margin-top: 20px; }
+.editor-status[data-error='true'] { color: #a33b4b; }

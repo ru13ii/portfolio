@@ -1,4 +1,7 @@
-import initialContent from '../data/content.json';
+import initialContent from '../lib/content.js';
+
+import { validateContent } from '../lib/content-policy.js';
+import { trustedEditorLocation, saveContent } from '../lib/github-save.js';
 
 const content = structuredClone(initialContent);
 let syncedContent = structuredClone(initialContent);
@@ -10,7 +13,7 @@ let dirty = false;
 
 function showStatus(message, isError = false) {
   status.textContent = message;
-  status.style.color = isError ? '#a33b4b' : '#4d5260';
+  status.dataset.error = String(isError);
 }
 
 function markDirty() {
@@ -108,7 +111,7 @@ function renderWorks() {
 
     const featureLabel = document.createElement('label');
     featureLabel.className = 'editor-check';
-    featureLabel.style.marginTop = '20px';
+
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = Boolean(work.featured);
@@ -235,44 +238,7 @@ document.getElementById('add-work').addEventListener('click', () => {
   workList.lastElementChild?.scrollIntoView({ behavior: 'auto', block: 'center' });
 });
 
-function validate() {
-  const hostname = (value) => {
-    try {
-      const url = new URL(value);
-      return url.protocol === 'https:' ? url.hostname : '';
-    } catch {
-      return '';
-    }
-  };
-  if (!content.site.name.trim()) return '活動名義を入力してください。';
-  for (const update of content.updates) {
-    if (!/^\d{4}\.\d{2}\.\d{2}$/.test(update.date)) return 'お知らせの日付はYYYY.MM.DDの形式で入力してください。';
-    if (!update.text.trim()) return 'お知らせの内容を入力してください。';
-    if (update.url && !hostname(update.url)) return 'お知らせのリンクには正しいhttps://のURLを入力してください。';
-  }
-  if (!content.works.length) return '作品を1件以上登録してください。';
-  for (const work of content.works) {
-    if (!work.title.trim()) return 'すべての作品に曲名を入力してください。';
-    if (!content.genres.includes(work.genre)) return `${work.title}: ジャンルを選び直してください。`;
-    for (const key of ['mediaUrl', 'soundcloudUrl', 'coverUrl']) {
-      if (work[key] && !hostname(work[key])) return `${work.title}: 正しいhttps://のURLを入力してください。`;
-    }
-    if (work.soundcloudUrl) {
-      const host = hostname(work.soundcloudUrl);
-      if (host !== 'soundcloud.com' && !host.endsWith('.soundcloud.com')) return `${work.title}: SoundCloudのURLを確認してください。`;
-    }
-    if (work.mediaUrl) {
-      const host = hostname(work.mediaUrl);
-      const validYouTube = work.mediaType === 'youtube' && (host === 'youtu.be' || host === 'youtube.com' || host.endsWith('.youtube.com'));
-      const validSoundCloud = work.mediaType === 'soundcloud' && (host === 'soundcloud.com' || host.endsWith('.soundcloud.com'));
-      if (!validYouTube && !validSoundCloud) return `${work.title}: 再生先の種類とURLを合わせてください。`;
-    }
-  }
-  for (const key of ['youtubeUrl', 'soundcloudUrl', 'xUrl', 'formEndpoint']) {
-    if (content.site[key] && !hostname(content.site[key])) return `${key}には正しいhttps://のURLを入力してください。`;
-  }
-  return '';
-}
+function validate() { return validateContent(content); }
 
 function jsonText() {
   return `${JSON.stringify(content, null, 2)}\n`;
@@ -290,67 +256,37 @@ document.getElementById('download-json').addEventListener('click', () => {
   showStatus('JSONを書き出しました。');
 });
 
-function toBase64(text) {
-  const bytes = new TextEncoder().encode(text);
-  let binary = '';
-  for (let i = 0; i < bytes.length; i += 8192) {
-    binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
-  }
-  return btoa(binary);
-}
-
-function fromBase64(text) {
-  const binary = atob(text.replace(/\s/g, ''));
-  return new TextDecoder().decode(Uint8Array.from(binary, (character) => character.charCodeAt(0)));
-}
+const tokenInput = document.getElementById('github-token');
+const trusted = trustedEditorLocation(location.href, window.self === window.top);
+// An embedded or copied editor must not accept credentials. This is defense in
+// depth; GitHub authorization remains the actual write permission boundary.
+tokenInput.disabled = !trusted;
+saveButton.disabled = !trusted;
+if (!trusted) showStatus('GitHub保存は公式サイト、またはローカルの編集ページを直接開いて利用してください。', true);
+for (const event of ['pagehide', 'pageshow']) window.addEventListener(event, () => { tokenInput.value = ''; });
 
 saveButton.addEventListener('click', async () => {
+  const token = tokenInput.value.trim();
+  tokenInput.value = ''; // Clear even on validation, network, or authentication failure.
+  if (!trusted) return;
   const error = validate();
   if (error) return showStatus(error, true);
-  const owner = document.getElementById('github-owner').value.trim();
-  const repo = document.getElementById('github-repo').value.trim();
-  const tokenInput = document.getElementById('github-token');
-  const token = tokenInput.value.trim();
-  if (!/^[\w.-]+$/.test(owner) || !/^[\w.-]+$/.test(repo) || !token) {
-    return showStatus('GitHubユーザー名、リポジトリ名、トークンを入力してください。', true);
-  }
+  if (!token) return showStatus('アクセストークンを入力してください。', true);
   saveButton.disabled = true;
-  showStatus('GitHub上のファイルを確認しています…');
-  const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/src/data/content.json`;
-  const headers = {
-    Accept: 'application/vnd.github+json',
-    Authorization: `Bearer ${token}`,
-    'X-GitHub-Api-Version': '2022-11-28',
-  };
+  tokenInput.disabled = true;
+  showStatus('GitHub上の内容を確認して保存しています…');
+  // Snapshot edits so typing during a request cannot change the committed data.
+  const snapshot = structuredClone(content);
   try {
-    const currentResponse = await fetch(url, { headers });
-    if (!currentResponse.ok) throw new Error(`保存先を確認できませんでした（${currentResponse.status}）。リポジトリ名と権限を確認してください。`);
-    const current = await currentResponse.json();
-    if (!current.sha) throw new Error('保存先のJSONが見つかりませんでした。');
-    if (current.content) {
-      const remoteContent = JSON.parse(fromBase64(current.content));
-      if (JSON.stringify(remoteContent) !== JSON.stringify(syncedContent)) {
-        throw new Error('GitHub上の内容が更新されています。ページを再読み込みしてから編集し直してください。');
-      }
-    }
-    showStatus('GitHubに保存しています…');
-    const saveResponse = await fetch(url, {
-      method: 'PUT',
-      headers: { ...headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: 'Update RuBii portfolio content',
-        content: toBase64(jsonText()),
-        sha: current.sha,
-      }),
-    });
-    if (!saveResponse.ok) throw new Error(`保存できませんでした（${saveResponse.status}）。トークンの権限や変更の競合を確認してください。`);
-    syncedContent = structuredClone(content);
-    dirty = false;
-    showStatus('保存しました。公開サイトへの反映には数分かかる場合があります。');
-    tokenInput.value = '';
+    await saveContent(token, snapshot, syncedContent);
+    syncedContent = snapshot;
+    dirty = JSON.stringify(content) !== JSON.stringify(snapshot);
+    showStatus(dirty ? '保存しました。保存処理中に加えた変更は未保存です。' : '保存しました。公開サイトへの反映には数分かかる場合があります。');
   } catch (cause) {
     showStatus(cause instanceof Error ? cause.message : '保存できませんでした。', true);
   } finally {
+    tokenInput.value = '';
+    tokenInput.disabled = false;
     saveButton.disabled = false;
   }
 });

@@ -38,7 +38,7 @@ GitHubの編集ページで保存すると、GitHub側に新しいコミット�
 5. Repository permissionsの **Contents** を **Read and write** にする。
 6. 発行したトークンを編集ページの「アクセストークン」欄に入力し、「GitHubへ保存」を押す。
 
-保存後、GitHub Actionsが公開サイトを更新する。トークンはリポジトリやブラウザの保存領域へ記録せず、保存成功後に入力欄から消す。トークンはパスワードと同様に扱い、公開ファイルやチャットに貼らない。期限切れになったら新しいトークンを用意する。
+保存後、GitHub Actionsが公開サイトを更新する。トークンはリポジトリやブラウザの保存領域へ記録せず、保存開始時に入力欄から消し、エラー時・ページ離脱時にも残さない。トークンはパスワードと同様に扱い、公開ファイルやチャットに貼らない。期限切れになったら新しいトークンを用意する。
 
 [GitHub公式: アクセストークンの管理](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 
@@ -49,7 +49,7 @@ GitHub Pagesは静的サイトなので、受信・メール通知はFormspree�
 1. [Formspree](https://formspree.io/register)に登録・ログインし、受信に使うメールアドレスを確認する。
 2. サイト用フォームを作成する。
 3. 受信先メールアドレスをサービス側で設定する。
-4. 発行された `https://formspree.io/f/フォームID` を `src/data/content.json` の `site.formEndpoint` に設定する。編集ページの「フォーム送信先 URL」からも設定できる。
+4. 送信先を変更する場合は `src/lib/content-policy.js` の `FORM_ENDPOINT` と `src/data/content.json` の `site.formEndpoint` を同じ承認済みURLへ更新する。編集ページからは現在の承認済みURL、または無効化用の空欄だけを保存できる。CSPの送信先もこの定数から生成する。
 5. サイトを再公開してから、テスト送信を行い、Formspreeの受信記録と受信先メールの到着を確認する。
 
 受信先メールアドレスは公開コードに記載しない。フォームのURLは公開される受付先であり、GitHubのアクセストークンとは異なる。トークンをフォームURLに入力しない。
@@ -69,3 +69,14 @@ Formspreeの無料枠は月50件（2026-10-03確認）。最新の条件は[料�
 ## 内容の確認事項
 
 プロフィールは仮文。「おもかげ」のジャンル・担当表記は本人による確認待ち。各作品の情報・SoundCloud曲URLは編集ページから更新できる。
+
+## セキュリティ確認（0.5.3以降）
+
+- `npm test`、`npm audit --audit-level=low`、`npm run build`、`npm run check:dist` を実行する。
+- 本番と同じパスの確認には `GITHUB_REPOSITORY=ru13ii/portfolio npm run build` を使う。CSPは開発サーバーではなくビルド済みページで確認する。
+- `npm run preview` の既存プロセスがある場合、設定変更後は `npx astro preview stop` で停止して起動し直す。
+- Astroが出すscript/styleのattributeディレクティブに関する警告は、HTML属性のスクリプト・スタイルを意図的に禁止した設定によるもの。`unsafe-inline` を追加して解消しない。
+- 公式編集URLは `https://ru13ii.github.io/portfolio/edit/`。保存先のリポジトリ名は変更できない。独自ドメインへの移行時は `trustedEditorLocation` とCSP、回帰テストを更新する。
+- アカウントには2要素認証またはパスキーを使い、編集用PATは対象リポジトリだけ・Contents書き込み・短い有効期限に限定する。PATには単一JSONファイルだけを許可する粒度はない。
+- GitHub Actionsの週次監査、Dependabotの通知・PRを確認する。検知で公開が停止した場合、原因を解消して再実行する。監査を外して公開を通さない。
+- GitHub Pagesは任意のHTTPレスポンスヘッダーを設定できないため、`frame-ancestors` や `X-Frame-Options` をmetaタグで代用しない。編集画面では埋め込み時のトークン入力・保存を無効にする。
