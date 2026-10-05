@@ -11,3 +11,8 @@ dist/
 *.pem
 *.key
 *.log
+
+# Local handoff notes and verification screenshots are not release artifacts.
+/docs/handoff.md
+/docs/restart-prompt.md
+/docs/screenshots/lyrics-0.7.0.png

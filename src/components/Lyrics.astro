@@ -1,0 +1,28 @@
+---
+const { work } = Astro.props;
+const lyrics = work.lyrics ?? '';
+---
+{/* Native disclosure supports mouse, touch and keyboard without adding scripts.
+    Render plain text only; lyrics must never be interpreted as HTML/Markdown. */}
+{lyrics.trim() && <details class="lyrics">
+  <summary class="lyrics__toggle">
+    <span class="sr-only">{work.title}の</span>
+    <span class="lyrics__show">歌詞を表示</span>
+    <span class="lyrics__hide">歌詞を閉じる</span>
+    <span class="lyrics__mark" aria-hidden="true"></span>
+  </summary>
+  <p class="lyrics__text">{lyrics}</p>
+</details>}
+
+<style>
+  .lyrics { min-width: 0; margin-top: 18px; border-block: 1px solid var(--line); }
+  .lyrics__toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding-block: 12px; cursor: pointer; list-style: none; font-size: 12px; color: var(--ink); }
+  .lyrics__toggle::-webkit-details-marker { display: none; }
+  .lyrics__toggle:hover { color: var(--accent); }
+  .lyrics__hide { display: none; }
+  .lyrics[open] .lyrics__show { display: none; }
+  .lyrics[open] .lyrics__hide { display: inline; }
+  .lyrics__mark::before { content: '+'; }
+  .lyrics[open] .lyrics__mark::before { content: '−'; }
+  .lyrics__text { min-width: 0; margin: 0; padding: 8px 0 22px; font-size: 13px; line-height: 2.2; white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>

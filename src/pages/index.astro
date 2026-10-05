@@ -4,6 +4,7 @@ import MusicAir from '../components/MusicAir.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import MediaPreview from '../components/MediaPreview.astro';
 import WorkRow from '../components/WorkRow.astro';
+import Lyrics from '../components/Lyrics.astro';
 import ContactCoda from '../components/ContactCoda.astro';
 import content from '../lib/content.js';
 const base = import.meta.env.BASE_URL;
@@ -31,6 +32,7 @@ const selected = content.works.filter(work => work.id !== featured?.id).slice(0,
           <h2>{featured.title}</h2>
           <p class="feature-description">{content.site.featuredLead}<br />{featured.description}</p>
           <p class="feature-meta">{featured.role}{featured.vocal && ` / Vocal: ${featured.vocal}`}<span>{featured.year}</span></p>
+          <Lyrics work={featured} />
         </div>
       </div>}
     </div>

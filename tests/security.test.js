@@ -42,6 +42,7 @@ test('editor rejects framing, unofficial origins, and unrelated paths', () => {
 const current = (data=original) => ({ok:true,json:async()=>({sha:'known-sha',encoding:'base64',content:Buffer.from(JSON.stringify(data)).toString('base64')})});
 test('GitHub save fixes destination and branch, rejects redirects, and uses expected sha',async()=>{
   const calls=[];const data=copy();data.site.name='テスト';
+  data.works[0].lyrics = '保存用の確認文\n\n改行と空行\n<script>通常の文字として保存</script>';
   await saveContent('test-only-token',data,original,async(url,options)=>{calls.push({url,options});return calls.length===1?current():{ok:true};});
   assert.equal(calls.length,2);assert.equal(calls[0].url,GITHUB_CONTENT_URL+'?ref=main');assert.equal(calls[1].url,GITHUB_CONTENT_URL);
   for(const {options} of calls){assert.equal(options.redirect,'error');assert.equal(options.credentials,'omit');assert.equal(options.cache,'no-store');assert.equal(options.referrerPolicy,'no-referrer');}
@@ -75,5 +76,23 @@ test('career text accepts multiline/plain text and preserves old content compati
 test('career text rejects non-string data and excessive input', () => {
   for (const value of [null,[],{},42,'a'.repeat(20001)]) {
     const data=copy();data.site.careerText=value;assert.notEqual(validateContent(data),'');
+  }
+});
+
+test('lyrics accept multiline plain text, the length boundary and older work data', () => {
+  for (const value of ['', '  \n ', '一行目\n\n二行目', '<script>alert(1)</script>', '歌'.repeat(20000)]) {
+    const data = copy(); data.works[0].lyrics = value;
+    assert.equal(validateContent(data), '');
+  }
+  const old = copy();
+  for (const work of old.works) delete work.lyrics;
+  assert.equal(validateContent(old), '');
+});
+
+test('lyrics reject non-string data and excessive input before export or build', () => {
+  for (const value of [null, [], {}, 42, true, '歌'.repeat(20001)]) {
+    const data = copy(); data.works[0].lyrics = value;
+    assert.notEqual(validateContent(data), '');
+    assert.throws(() => assertContent(data));
   }
 });

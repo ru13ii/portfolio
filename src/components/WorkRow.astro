@@ -1,5 +1,6 @@
 ---
 import MediaPreview from './MediaPreview.astro';
+import Lyrics from './Lyrics.astro';
 const { work, index = 0, heading = 'h2' } = Astro.props;
 const Heading = heading;
 ---
@@ -19,5 +20,6 @@ const Heading = heading;
       {work.soundcloudUrl && <a href={work.soundcloudUrl} target="_blank" rel="noopener noreferrer">SoundCloud ↗<span class="sr-only"> 新しいタブで開く</span></a>}
       {work.mediaUrl && <a href={work.mediaUrl} target="_blank" rel="noopener noreferrer">公開ページ ↗<span class="sr-only"> 新しいタブで開く</span></a>}
     </div>
+    <Lyrics work={work} />
   </div>
 </article>

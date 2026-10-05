@@ -6,8 +6,8 @@
 
 ## 掲載内容
 
-- Home: グランドピアノの上面図と名義・代表曲、作品・プロフィール・活動情報。
-- Works: オリジナル楽曲の試聴、担当・起用先、ジャンル別の絞り込み。
+- Home: グランドピアノの上面図と名義・代表曲、作品・プロフィール・活動情報、歌詞の開閉表示。
+- Works: オリジナル楽曲の試聴、担当・起用先、ジャンル別の絞り込み、歌詞の開閉表示。
 - About: プロフィール・自由文の経歴・活動リンク。
 - Contact: Formspreeを使った楽曲制作・BGM制作の問い合わせ。
 - 編集ページ: 文章・経歴・作品・お知らせをGitHubへ保存、JSON書き出し。
@@ -47,6 +47,8 @@ npm run preview
 
 経歴は編集ページの「経歴 → Aboutページの経歴文」で編集します。改行・空行を保って表示し、空欄にするとAboutの経歴欄全体を非表示にします。HTML・Markdownの装飾は使用せず、通常の文章として保存します。
 
+歌詞は編集ページの「作品 → 各楽曲の歌詞（任意）」で入力します（0.7.0以降）。Homeの代表曲・掲載作品とWorksで「歌詞を表示」をクリックすると開き、「歌詞を閉じる」で閉じます。改行・空行を保持し、空欄ならボタンごと非表示です。最大20,000文字で、HTML・Markdownは解釈しません。ローカルで直接編集する場合は `src/data/content.json` の各作品に `lyrics` を追加します。歌詞本文は本人が後から入力するため、今回の更新では追加していません。
+
 ## 公開
 
 mainへのプッシュで .github/workflows/deploy.yml がビルドし、GitHub Pagesへ公開します。GitHub Actions内のGITHUB_REPOSITORYから公開パス /portfolio/ を設定します。独自ドメインではSITE_URLとSITE_BASE、および編集ページの許可URLを見直してください。
@@ -66,10 +68,8 @@ JSONのURL・データ形式は編集時とビルド時に検証します。不�
 ## 設計資料
 
 - [経歴欄の仕様と料金表の検討](docs/career-and-pricing-0.6.0.md)
-
-- [現行の仕様と正式版への移行](docs/production-adoption-0.5.0.md)
+- [歌詞の表示・編集仕様と検証](docs/lyrics-0.7.0.md)
+- [現行のデザイン・操作仕様](docs/design.md)
 - [ホスティングの検討とGitHub Pages継続の判断](docs/vercel-hosting.md)
-- [鍵盤・索引・UIの調整](docs/ui-refinement-0.4.1.md)
-- [ピアノ形状の考察](docs/piano-refinement-0.4.0.md)
 - [設計・作業記録](docs/development.md)
 - [開発・運用ガイド](docs/operations.md)

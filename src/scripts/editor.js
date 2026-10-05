@@ -50,16 +50,25 @@ function field(labelText, fieldName, value, index, options = {}) {
     });
   } else if (options.multiline) {
     input = document.createElement('textarea');
-    input.rows = 3;
+    input.rows = options.rows ?? 3;
   } else {
     input = document.createElement('input');
     if (options.type) input.type = options.type;
   }
   input.id = id;
+  if (options.maxLength) input.maxLength = options.maxLength;
   input.value = value ?? '';
   input.dataset.workIndex = String(index);
   input.dataset.workField = fieldName;
   wrapper.append(input);
+  if (options.help) {
+    const help = document.createElement('p');
+    help.id = `${id}-help`;
+    help.className = 'editor-tip';
+    help.textContent = options.help;
+    input.setAttribute('aria-describedby', help.id);
+    wrapper.append(help);
+  }
   return wrapper;
 }
 
@@ -103,6 +112,10 @@ function renderWorks() {
       field('歌声合成音源・ボーカル', 'vocal', work.vocal, index),
       field('再生先の種類', 'mediaType', work.mediaType, index, { choices: ['youtube', 'soundcloud'] }),
       field('作品の説明', 'description', work.description, index, { multiline: true, wide: true }),
+      field('歌詞（任意）', 'lyrics', work.lyrics, index, {
+        multiline: true, wide: true, rows: 8, maxLength: 20000,
+        help: 'Home・Worksでクリックして開閉できます。改行・空行を保持します。空欄なら開閉ボタンも非表示になります。最大20,000文字。HTML・Markdownの装飾は使えません。',
+      }),
       field('再生先 URL', 'mediaUrl', work.mediaUrl, index, { type: 'url', wide: true }),
       field('SoundCloudの曲 URL（任意）', 'soundcloudUrl', work.soundcloudUrl, index, { type: 'url', wide: true }),
       field('サムネイル画像 URL', 'coverUrl', work.coverUrl, index, { type: 'url', wide: true }),
@@ -231,7 +244,7 @@ document.getElementById('add-work').addEventListener('click', () => {
   content.works.push({
     id: `work-${crypto.randomUUID().slice(0, 8)}`,
     title: '', year: '', genre: content.genres[0], role: '', usage: 'オリジナル楽曲',
-    vocal: '', description: '', mediaType: 'soundcloud', mediaUrl: '', soundcloudUrl: '', coverUrl: '', featured: content.works.length === 0,
+    vocal: '', description: '', lyrics: '', mediaType: 'soundcloud', mediaUrl: '', soundcloudUrl: '', coverUrl: '', featured: content.works.length === 0,
   });
   renderWorks();
   markDirty();

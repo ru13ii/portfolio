@@ -61,6 +61,8 @@ export function validateContent(data) {
     for (const work of data.works) {
       if (!object(work)) fail('作品の形式が正しくありません。');
       for (const key of ['id', 'title', 'year', 'genre', 'role', 'usage', 'vocal', 'description']) text(work[key], key, ['id', 'title'].includes(key));
+      // Optional so existing work data remains compatible; use the same text limit.
+      if (work.lyrics !== undefined) text(work.lyrics, `${work.title}: 歌詞`);
       if (!/^[a-zA-Z0-9_-]+$/.test(work.id) || ids.has(work.id)) fail('作品IDが不正、または重複しています。');
       ids.add(work.id);
       if (!data.genres.includes(work.genre)) fail(`${work.title}: ジャンルを選び直してください。`);
