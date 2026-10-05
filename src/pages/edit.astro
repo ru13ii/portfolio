@@ -31,6 +31,15 @@ import content from '../lib/content.js';
           </div>
         </section>
 
+        <section class="editor-section" aria-labelledby="editor-career-heading">
+          <div class="editor-section__head"><h2 id="editor-career-heading">経歴</h2></div>
+          <div class="field">
+            <label for="edit-career">Aboutページの経歴文</label>
+            <textarea id="edit-career" rows="8" maxlength="20000" data-site-field="careerText" aria-describedby="edit-career-help" placeholder="2024年　活動開始&#10;2026年　楽曲制作・イベント参加など"></textarea>
+          </div>
+          <p class="editor-tip" id="edit-career-help">文章を自由に入力できます。改行・空行はそのまま表示されます。空欄にするとAboutの経歴欄全体が非表示になります。</p>
+        </section>
+
         <section class="editor-section" aria-labelledby="editor-news-heading">
           <div class="editor-section__head">
             <h2 id="editor-news-heading">お知らせ</h2>

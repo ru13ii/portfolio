@@ -8,9 +8,9 @@
 
 - Home: グランドピアノの上面図と名義・代表曲、作品・プロフィール・活動情報。
 - Works: オリジナル楽曲の試聴、担当・起用先、ジャンル別の絞り込み。
-- About: プロフィールと活動リンク。
+- About: プロフィール・自由文の経歴・活動リンク。
 - Contact: Formspreeを使った楽曲制作・BGM制作の問い合わせ。
-- 編集ページ: 文章・作品・お知らせをGitHubへ保存、JSON書き出し。
+- 編集ページ: 文章・経歴・作品・お知らせをGitHubへ保存、JSON書き出し。
 
 生成りの紙面と黒いグランドピアノ、五線・音符を組み合わせたデザインです。メニューには4つの白鍵と3つの黒鍵を配置しています。PCでは背景の音符がゆっくり漂い、スマホ・タッチ操作・OSの動き削減では演出を停止します。
 
@@ -37,13 +37,15 @@ npm run preview
 
 ## 編集する場所
 
-- src/data/content.json: 文章・作品・お知らせ・リンク・フォーム送信先。
+- src/data/content.json: 文章・経歴（site.careerText）・作品・お知らせ・リンク・フォーム送信先。
 - public/rubii-icon.png: ヘッダー・About・タブで使う人物アイコン。
 - src/components/GrandPiano.astro: ピアノの上面図と鍵盤。
 - src/styles/global.css / piano-space.css: 共通レイアウト・鍵盤・ジャンル索引・演出。
 - src/scripts/music-space.js: 画面外・非表示時の背景音符の停止。
 
 公開サイトの編集ページでは、対象リポジトリにContentsの書き込み権限を持つアクセストークンを保存時に入力します。トークンはファイルやブラウザーの保存領域へ記録しません。詳細は [開発・運用ガイド](docs/operations.md) を参照してください。
+
+経歴は編集ページの「経歴 → Aboutページの経歴文」で編集します。改行・空行を保って表示し、空欄にするとAboutの経歴欄全体を非表示にします。HTML・Markdownの装飾は使用せず、通常の文章として保存します。
 
 ## 公開
 
@@ -62,6 +64,8 @@ JSONのURL・データ形式は編集時とビルド時に検証します。不�
 詳細は [監査結果・残る制約](docs/security-audit-0.5.3.md) と [報告窓口](SECURITY.md) を参照してください。
 
 ## 設計資料
+
+- [経歴欄の仕様と料金表の検討](docs/career-and-pricing-0.6.0.md)
 
 - [現行の仕様と正式版への移行](docs/production-adoption-0.5.0.md)
 - [ホスティングの検討とGitHub Pages継続の判断](docs/vercel-hosting.md)

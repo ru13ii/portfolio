@@ -39,6 +39,8 @@ export function validateContent(data) {
     if (!object(data) || !object(data.site)) fail('サイト情報の形式が正しくありません。');
     const siteFields = ['name', 'nameJa', 'role', 'heroText', 'featuredLead', 'aboutTitle', 'aboutText', 'homeContactTitle', 'homeContactText', 'worksIntro', 'aboutIntro', 'contactIntro', 'contactText'];
     for (const key of siteFields) text(data.site[key], key, key === 'name');
+    // Optional for compatibility with content saved before the career feature.
+    if (data.site.careerText !== undefined) text(data.site.careerText, '経歴文');
     link(data.site.youtubeUrl, 'YouTube', (v) => providerUrl(v, ['youtube.com', 'www.youtube.com', 'm.youtube.com']));
     link(data.site.soundcloudUrl, 'SoundCloud', soundcloudUrl);
     link(data.site.xUrl, 'X', (v) => providerUrl(v, ['x.com', 'www.x.com', 'twitter.com', 'www.twitter.com']));

@@ -65,3 +65,15 @@ for (const markup of ['<SCRIPT>alert(1)</SCRIPT>', '<ScRiPt title="a > b">alert(
 test('HTML verifier accepts plain text that resembles an escaped tag', () => {
   assert.doesNotThrow(() => checkHtml(fixture('&lt;SCRIPT&gt;safe text&lt;/SCRIPT&gt;')));
 });
+
+test('career text accepts multiline/plain text and preserves old content compatibility', () => {
+  for (const value of ['', '  \n ', '2024年 活動開始\n\n2026年 楽曲制作', '<script>alert(1)</script>']) {
+    const data=copy();data.site.careerText=value;assert.equal(validateContent(data),'');
+  }
+  const old=copy();delete old.site.careerText;assert.equal(validateContent(old),'');
+});
+test('career text rejects non-string data and excessive input', () => {
+  for (const value of [null,[],{},42,'a'.repeat(20001)]) {
+    const data=copy();data.site.careerText=value;assert.notEqual(validateContent(data),'');
+  }
+});
