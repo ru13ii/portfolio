@@ -2,7 +2,7 @@
 
 ボカロP・作曲家 **RuBii（るびぃ）** のポートフォリオサイトです。
 
-**[サイトを見る](https://ru13ii.github.io/portfolio/)** · [作品](https://ru13ii.github.io/portfolio/works/) · [編集ページ](https://ru13ii.github.io/portfolio/edit/)
+**[サイトを見る](https://ru13ii.github.io/portfolio/)** · [作品](https://ru13ii.github.io/portfolio/works/)
 
 ## 掲載内容
 
