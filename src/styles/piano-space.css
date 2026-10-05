@@ -14,7 +14,8 @@
 .piano-key[aria-current=page] { color: #6f5b44; background: linear-gradient(90deg,#d6cfbf,#f0eadc 10%,#f7f2e6 90%,#cec7b7); box-shadow: inset 0 -2px 0 #bfb7a5,inset 0 4px 7px #00000012; }
 
 .music-room { min-height: 0; overflow: clip; padding-bottom: 26px; }
-.room-inner { position: relative; z-index: 1; width: min(100% - 64px,1440px); grid-template-columns: minmax(0,1.55fr) minmax(300px,1fr); gap: 24px; padding-block: 34px 46px; align-items: center; }
+/* Keep the piano anchored while the featured lyrics expand the other column. */
+.room-inner { position: relative; z-index: 1; width: min(100% - 64px,1440px); grid-template-columns: minmax(0,1.55fr) minmax(300px,1fr); gap: 24px; padding-block: 34px 46px; align-items: start; }
 .grand-scene { position: relative; aspect-ratio: 940/680; width: calc(100% + 30px); margin-left: -24px; min-width: 0; }
 .grand-piano { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 20px 14px #1a17191c); }
 .room-intro { position: absolute; left: 21%; top: 23%; width: 44%; padding: 0; color: #f9f6ed; }
