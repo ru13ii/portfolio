@@ -33,9 +33,10 @@
 .feature-heading .eyebrow { color: #71634f; }
 .feature-caption h2 { font-size: 32px; }
 .feature-description { font-size: 11px; }
-/* The tile size follows viewport width, never the height of expanded lyrics.
+/* The score tile keeps its proportions and readable notes even on mobile,
+   and never follows the height of expanded lyrics.
    Keep a separate same-origin SVG file so the existing CSP need not allow data URLs. */
-.home-page { background-image: url('../assets/home-staves.svg?no-inline'); background-position: center top; background-size: 100% clamp(420px,47.2222vw,680px); background-repeat: repeat-y; }
+.home-page { background-image: url('../assets/home-staves.svg?no-inline'); background-position: center top; background-size: clamp(900px,100%,1440px) auto; background-repeat: repeat-y; }
 .home-page .about-sheet-section { background-color: #e9e6df80; }
 /* Anchor ambient notes to the same proportions instead of the growing room. */
 .music-air { position: absolute; inset: 0 0 auto; aspect-ratio: 1440 / 680; z-index: 0; pointer-events: none; }

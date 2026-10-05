@@ -1,7 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 680" preserveAspectRatio="none" fill="none" stroke="#99887b" stroke-opacity=".17" stroke-width=".7">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="680" viewBox="0 0 1440 680" fill="none" stroke="#99887b" stroke-opacity=".17" stroke-width=".7">
   <path d="M430 590C660 642 735 333 1010 385S1260 584 1440 508"/>
   <path d="M430 598C660 650 735 341 1010 393S1260 592 1440 516"/>
   <path d="M430 606C660 658 735 349 1010 401S1260 600 1440 524"/>
   <path d="M430 614C660 666 735 357 1010 409S1260 608 1440 532"/>
   <path d="M430 622C660 674 735 365 1010 417S1260 616 1440 540"/>
+  <!-- Match Note.astro; these notes travel with every repeated staff tile. -->
+  <defs>
+    <g id="note" fill="#958076" fill-opacity=".4" stroke="none">
+      <ellipse cx="10" cy="34" rx="8.5" ry="5.5" transform="rotate(-22 10 34)"/>
+      <path d="M16 34V3h2c0 8 9 9 9 16 0 4-2 7-4 9 2-7 1-10-5-12v18z"/>
+    </g>
+  </defs>
+  <use href="#note" transform="translate(515 582) rotate(-8)"/>
+  <use href="#note" transform="translate(760 414) rotate(8)"/>
+  <use href="#note" transform="translate(1058 395) rotate(-6)"/>
+  <use href="#note" transform="translate(1310 538) rotate(7)"/>
 </svg>
