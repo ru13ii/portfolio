@@ -10,6 +10,7 @@ const {
   title = `${content.site.name} | ボカロP・作曲家`,
   description = content.site.heroText,
   noindex = false,
+  mainClass = '',
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -30,7 +31,7 @@ const base = import.meta.env.BASE_URL;
   <body>
     <a class="skip-link" href="#main">本文へ移動</a>
     <Header />
-    <main id="main"><slot /></main>
+    <main id="main" class={mainClass}><slot /></main>
     <Footer />
     <script>import '../scripts/music-space.js';</script>
   </body>

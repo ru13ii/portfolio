@@ -33,8 +33,12 @@
 .feature-heading .eyebrow { color: #71634f; }
 .feature-caption h2 { font-size: 32px; }
 .feature-description { font-size: 11px; }
-.music-air { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.air-staves { position: absolute; width: 100%; height: 100%; stroke: #99887b; stroke-opacity: .17; stroke-width: .7; }
+/* The tile size follows viewport width, never the height of expanded lyrics.
+   Keep a separate same-origin SVG file so the existing CSP need not allow data URLs. */
+.home-page { background-image: url('../assets/home-staves.svg?no-inline'); background-position: center top; background-size: 100% clamp(420px,47.2222vw,680px); background-repeat: repeat-y; }
+.home-page .about-sheet-section { background-color: #e9e6df80; }
+/* Anchor ambient notes to the same proportions instead of the growing room. */
+.music-air { position: absolute; inset: 0 0 auto; aspect-ratio: 1440 / 680; z-index: 0; pointer-events: none; }
 .air-note { position: absolute; color: #958076; opacity: .4; }
 .air-note .music-note { width: 25px; height: 37px; color: inherit; }
 .air-note--1 { left: 12%; top: 4%; --drift: 7px; --turn: -8deg; --duration: 8s; }
