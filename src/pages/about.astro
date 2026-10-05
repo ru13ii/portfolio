@@ -4,7 +4,7 @@ import content from '../lib/content.js';
 const base = import.meta.env.BASE_URL;
 ---
 <SiteLayout title={`About | ${content.site.name}`} description={`${content.site.name}のプロフィールと活動について。`}>
-  <div class="shell page-heading"><p class="eyebrow">02 / BEHIND THE NOTES</p><h1>About<span>作り手について</span></h1><p>{content.site.aboutIntro}</p></div>
+  <div class="shell page-heading"><p class="eyebrow">02 / BEHIND THE NOTES</p><h1>About<span>私について</span></h1><p>{content.site.aboutIntro}</p></div>
   <section class="shell about-sheet about-sheet--page" aria-labelledby="about-title">
     <div class="sheet-portrait"><img src={`${base}rubii-icon.png`} alt="るびぃのアイコン" width="400" height="400" /><span class="portrait-signature">{content.site.name}<span>{content.site.nameJa}</span></span></div>
     <div class="sheet-copy"><p class="eyebrow">{content.site.role}</p><h2 id="about-title">{content.site.aboutTitle}</h2><p>{content.site.aboutText}</p>
