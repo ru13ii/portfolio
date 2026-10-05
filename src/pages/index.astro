@@ -11,7 +11,7 @@ const base = import.meta.env.BASE_URL;
 const featured = content.works.find(work => work.featured) ?? content.works[0];
 const selected = content.works.filter(work => work.id !== featured?.id).slice(0, 3);
 ---
-<SiteLayout mainClass="home-page">
+<SiteLayout>
   <section class="music-room" aria-labelledby="hero-title">
     <div class="shell room-inner">
       <div class="grand-scene">
