@@ -19,6 +19,6 @@
     "node": "24.x"
   },
   "devDependencies": {
-    "parse5": "^8.0.1"
+    "parse5": "^8.1.0"
   }
 }
